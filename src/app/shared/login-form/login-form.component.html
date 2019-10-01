@@ -1,0 +1,13 @@
+<form [formGroup]='contactForm' class="loginForm">
+    <div class='title'> Login</div>
+    <div class='inputContainer'>
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName='email' required email>
+        </mat-form-field>
+        <mat-form-field>
+            <input type='password' matInput placeholder="Passward" formControlName='passward' required>
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <button type='submit' class='buttons' mat-raised-button color="primary" [disabled]="!contactForm.valid" (click)='login()'>Login</button>
+    </div>
+</form>

@@ -1,0 +1,23 @@
+<form [formGroup]='contactForm' class="registerForm">
+    <div class='title'> Register</div>
+    <div class='inputContainer'>
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName='email' required email>
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput placeholder="UserName" formControlName='username' required>
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <input type='password' matInput placeholder="Passward" formControlName='passward' required>
+            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+        </mat-form-field>
+        <div class='imageInput'>
+            <label>User Image(optional)</label>
+            <input type='file' placeholder="Image" value='Image'>
+        </div>
+        <button type='submit' class='buttons' mat-raised-button color="primary" [disabled]="!contactForm.valid"
+            (click)='register()'>Register</button>
+    </div>
+</form>

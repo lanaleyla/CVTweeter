@@ -1,0 +1,9 @@
+.tweetContainer{
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    height: 125px;
+    width: 100%;
+    background-color: #bfd7f5;
+    margin-bottom: 10px;
+}

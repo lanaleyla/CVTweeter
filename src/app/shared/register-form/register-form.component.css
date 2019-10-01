@@ -1,0 +1,30 @@
+.registerForm {
+    display: block;
+    justify-content: center;
+    width: 350px;
+    margin: 0 auto;
+    margin-top: 10%;
+}
+
+.title {
+    font-size: 35px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.inputContainer {
+    display: flex;
+    flex-flow: column;
+}
+
+.imageInput {
+    display: flex;
+    flex-flow: column;
+    margin: 5px;
+}
+
+.buttons {
+    width: fit-content;
+    margin-top: 30px;
+    align-self: center;
+}
