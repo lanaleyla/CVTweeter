@@ -1,0 +1,25 @@
+{
+    "users": [
+        {
+            "id": "",
+            "userName": "LanaLeyla",
+            "email": "lana@gmail.com",
+            "password": "123",
+            "image":""
+        },
+        {
+            "id": "",
+            "userName": "NikiItzhak",
+            "email": "niki@gmail.com",
+            "password": "123",
+            "image":""
+        },
+        {
+            "id": "",
+            "userName": "Anastasia",
+            "email": "anastasia@gmail.com",
+            "password": "123",
+            "image":""
+        }
+    ]
+}

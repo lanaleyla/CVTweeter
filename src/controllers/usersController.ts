@@ -1,0 +1,52 @@
+import { Request, Response, NextFunction } from 'express';
+import { resolveStore } from '../middleware/store';
+
+export function getAllUsers(req: Request, res: Response, next: NextFunction) {
+    const store = resolveStore(res);
+    return store.users.all()
+        .then(
+            (data) => {
+                res.send(data);
+                res.status(200);
+            }
+        )
+        .catch((err) => next(err));
+}
+
+export function getUserById(req: Request, res: Response, next: NextFunction) {
+    const store = resolveStore(res);
+    store.users.findById(req.params.id)
+        .then((data) => {
+            res.send(data);
+            res.status(200);
+        })
+        .catch((err) => {
+            // No member: 404
+            // Bad id format: 400
+            next(err);
+        })
+}
+
+export function getUserByEmail(req: Request, res: Response, next: NextFunction) {
+    const store = resolveStore(res);
+    store.users.findByEmail(req.params.email)
+        .then((data) => {
+            res.send(data);
+            res.status(200);
+        })
+        .catch((err) => next(err))
+}
+
+export function updateUsersLastLoginById(req: Request, res: Response, next: NextFunction) {
+    const store = resolveStore(res);
+    store.users.replaceLastLogin(req.params.id)
+        .then((data) => {
+            res.send(data);
+            res.status(200);
+        })
+        .catch((err) => {
+            next(err);
+        })
+}
+
+

@@ -1,0 +1,30 @@
+{
+    "tweets": [
+        {
+            "id": "",
+            "userName": "LanaLeyla",
+            "userImage": "",
+            "content": "L i for the way you look at me, O is for the only one i see, V is very very extraordinary,E is even more than anything that i adore",
+            "numberOfStars": 2,
+            "userListThatGaveStar":["5d9ba4f7a16cc8072c599790","5d9ba4f7a16cc8072c599791"]
+        },
+        {
+            "id": "",
+            "userName": "NikiItzhak",
+            "userImage": "",
+            "content": "BE HUMMBLE ;)",
+            "numberOfStars": 5,
+            "userListThatGaveStar":["5d9ba4f7a16cc8072c599791"]
+
+        },
+        {
+            "id": "",
+            "userName": "Anastasia",
+            "userImage": "",
+            "content": "I just wanna dance with sombody!:)",
+            "numberOfStars": 20,
+            "userListThatGaveStar":["5d9ba4f7a16cc8072c599790"]
+
+        }
+    ]
+}
