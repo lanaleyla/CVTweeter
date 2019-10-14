@@ -1,3 +1,3 @@
-export * from './DBService';
+export * from './createDBService';
 export * from './tweetDBService';
 export * from './userDBService';

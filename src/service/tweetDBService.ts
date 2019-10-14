@@ -2,29 +2,41 @@
 import mongodb from 'mongodb';
 import { Tweet, ITweet } from '../models/index';
 
-export class TweetDBService {//REPLACE T TO I TWEET INTERFACE
+//TWEETS DATA BASE MANGE SERVICE
+export class TweetDBService {
     private collection: mongodb.Collection;
-    constructor(db: mongodb.Db,) {
+    constructor(db: mongodb.Db, ) {
         this.collection = db.collection('tweets');
     }
 
-    public async all(): Promise<void[]> {//GET ALL TWEETS //change to ITweet
+    //GET ALL TWEETS
+    public async all(): Promise<ITweet[]> {//GET ALL TWEETS //change to ITweet
         const projection = { _id: 0 };
         return await this.collection.find({}, { projection }).toArray();
     }
 
-    public async findById(id: string | mongodb.ObjectID): Promise<null> {//GET TWEET BY ID
+    //GET TWEET BY ID
+    public async findById(id: string | mongodb.ObjectID): Promise<ITweet | null> {
         const documentId = new mongodb.ObjectID(id);
         const projection = { _id: 0 };
         return await this.collection.findOne({ _id: documentId }, { projection });
     }
 
-    public async findByUserName(userName: string) {
+    //GET TWEETS BY USER NAME
+    public async findByUserName(userName: string): Promise<ITweet[] | null> {
         const projection = { _id: 0 };
         return await this.collection.find({ userName: userName }, { projection }).toArray();
     }
 
-    public async add(tweet: ITweet): Promise<void> {//ADD TWEET TO DATA BASE
+    //GET TWEETS BY USER ID
+    public async findTweetsById(id: string | mongodb.ObjectID): Promise<ITweet[] | null> {
+        const documentId = new mongodb.ObjectID(id);
+        const projection = { _id: 0 };
+        return await this.collection.find({ _id: documentId }, { projection }).toArray();
+    }
+
+    //ADD TWEET TO DATA BASE
+    public async add(tweet: ITweet): Promise<void> {
         if (tweet) {
             const id = new mongodb.ObjectID();
             const date = new Date();
@@ -33,7 +45,8 @@ export class TweetDBService {//REPLACE T TO I TWEET INTERFACE
         }
     }
 
-    public async deleteById(id: string | mongodb.ObjectID): Promise<boolean> {//DELETE TWEET BY ID
+    //DELETE TWEET BY ID
+    public async deleteById(id: string | mongodb.ObjectID): Promise<boolean> {
         const documentId = new mongodb.ObjectID(id);
         const result = await this.collection.deleteOne({ _id: documentId });
         return !!result.deletedCount;

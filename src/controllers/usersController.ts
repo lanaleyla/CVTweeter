@@ -49,4 +49,16 @@ export function updateUsersLastLoginById(req: Request, res: Response, next: Next
         })
 }
 
+export function getUsersTweets(req: Request, res: Response, next: NextFunction) {
+    const store = resolveStore(res);
+    store.tweets.findTweetsById(req.params.id)
+        .then((data) => {
+            res.send(data);
+            res.status(200);
+        })
+        .catch((err) => {
+            next(err);
+        })
+}
+
 

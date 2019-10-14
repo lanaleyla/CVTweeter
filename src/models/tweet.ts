@@ -1,4 +1,4 @@
-import { ObjectID } from "bson";
+import { ObjectId } from "mongodb";
 
 export interface ITweet {
     id: string;
@@ -7,9 +7,9 @@ export interface ITweet {
     date: Date;
     content: string;
     numberOfStars: number;
-    userListThatGaveStar: string[] | ObjectID[];
+    userListThatGaveStar: string[] | ObjectId[];
 }
 
 export class Tweet {
-    constructor(public _id: ObjectID, public id: string, public userName: string, public userImage: string, public date: Date, public content: string, public numberOfStars: number, public userListThatGaveStar: string[] | ObjectID[]) { }
+    constructor(public _id: ObjectId, public id: string, public userName: string, public userImage: string, public date: Date, public content: string, public numberOfStars: number, public userListThatGaveStar: string[] | ObjectId[]) { }
 }

@@ -1,27 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
-
-const Joi = require('joi');
-const schema = Joi.object().keys({
-    id: Joi.string().min(36).max(36),
-    name: Joi.string().alphanum().min(3)
-})
+import { tweetSchema } from './validationScheme';
+import joi from 'joi';
 
 //validate id
 export function validateId(req: Request, res: Response, next: NextFunction) {
-
     const id = req.params.id;
-    const result = Joi.validate({ id: id }, schema);
+    const result = joi.validate({ id: id }, tweetSchema);
     if (result.error !== null) {
-        throw new Error("id input");
+        throw new Error("id format");
     }
     else next();
 }
 
-//validate name
-export function validateName(req: Request, res: Response, next: NextFunction) {
-    const result = Joi.validate({ name: req.params.name }, schema);
+//validate content
+export function validateContent(req: Request, res: Response, next: NextFunction) {
+    const result = joi.validate({ content: req.body.content }, tweetSchema);//notice that the content is in the body!!!!
     if (result.error !== null) {
-        throw new Error("name input");
+        throw new Error("content input");
     }
     else next();
 }
+

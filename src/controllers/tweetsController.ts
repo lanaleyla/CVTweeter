@@ -30,4 +30,14 @@ export function deleteTweetById(req: Request, res: Response, next: NextFunction)
         })
         .catch((err) => next(err))
 }
+
+export function getTweetById(req: Request, res: Response, next: NextFunction) {
+    const store = resolveStore(res);
+    store.tweets.findById(req.params.id)
+        .then((data) => {
+            res.send(data); //returns true or false
+            res.status(200);
+        })
+        .catch((err) => next(err))
+}
 // export function postTweet(req: Request, res: Response, next: NextFunction{}

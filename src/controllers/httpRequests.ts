@@ -5,30 +5,43 @@ const client = createHttpClient(`http://localhost:${getConfig('PORT', 3000)}`);
 
 export function callTest() {
 
-    // client.get('/api/members')
-    //     .then(response => {
-    //         console.log(response);
+    // let loginp=false;
+    // client.post('/api/auth/register', { json: { id: '', email: 'roni@gmail.com', userName: 'roni', password: '123', image: '' } })
+    //     .then((data) => {
+    //        // loginp = { email:data[0].email, password:data[0].password};
+    //         loginp=true;
     //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     })
+    //     .catch(err => console.log(err))
+    // //,{id:'',email:'roni@gmail.com',userName:'roni',password:'123',image:''}
 
-    // client.get('/api/members/5d9bab77c9c1db21c009d232')
-    //     .then(response => {
-    //         console.log(response);
-    //     })
-    //     .catch(error => {
-    //         console.log(error);
-    //     })
-        
+    // function me() {
+    //     client.post('api/auth/login', { json: { email: "roni@gmail.com", password: "123" } })
+    //         .then(response => {
+    //             console.log(response);
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         })
+    // }
+
+    // if(loginp)
+    //     me();
+
     // client.get('/api/tweets')
-    // .then(response => {
-    //     console.log(response);
-    // })
-    // .catch(error => {
-    //     console.log(error);
-    // })
+    //     .then(response => {
+    //         console.log(response);
+    //     })
+    //     .catch(error => {
+    //         console.log(error);
+    //     })
 
+    // client.get('/api/tweets/5da2048f067af55dc849c885')
+    //     .then(response => {
+    //         console.log(response);
+    //     })
+    //     .catch(error => {
+    //         console.log(error.message);
+    //     })
     //   client.delete('api/tweets/5d9bab77c9c1db21c009d235')
     // .then(response => {
     //     console.log(response);

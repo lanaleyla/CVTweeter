@@ -11,3 +11,7 @@ export function getConfig(key: string, fallback?: any) {
 export function getDBUrl(key: string, fallback?: any) {
     return process.env[key] || fallback;
 }
+
+export function getSecretKey(key: string, fallback?: any) {
+    return process.env[key] || fallback;
+}

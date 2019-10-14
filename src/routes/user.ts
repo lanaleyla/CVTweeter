@@ -1,22 +1,21 @@
 import { Router } from 'express';
 import * as userController from '../controllers/usersController';
+import { validateName, validateEmail, validateId } from '../validations/userValidation';
+
 
 const router = Router(); //our router
 
 //return all users  
-router.get('/',userController.getAllUsers);
-
-//register new user
-router.post('/auth/register');
-
-//login to the system
-router.post('/auth/login');
+router.get('/', userController.getAllUsers);
 
 //get user by id
-router.get('/:id',userController.getUserById);
+router.get('/:id', validateId, userController.getUserById);
+
+//get user by email
+router.get('/:email', validateEmail, userController.getUserByEmail);
 
 //get tweets of a user
-router.get('/members/:id/tweets');
+router.get('/:id/tweets', validateId, userController.getUsersTweets); //first get id, then get tweets using tweets service
 
 export { router as userRouter };
 

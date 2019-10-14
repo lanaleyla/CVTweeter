@@ -5,7 +5,8 @@ import { callTest } from './controllers/httpRequests';
 
 async function init() {
   await connectDb(); //CONNECT TO DATA BASE
-  sleep(5000);
+  sleep(1000);
+  //createDataBase();
 
   const port = getConfig('PORT', 3000);
   app.set('port', port);
@@ -21,23 +22,14 @@ async function init() {
 
     //closeConnection
   });
-
   await callTest();
 }
 
 init().catch(err => console.log('Error', err));
-
 
 //sleep function 
 export function sleep(ms: number) {
   Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, ms);
 }
 
-
-
-
-
-
-
-  //createDataBase();  //CALL FUNCTION TO BUILD THE DATA BASE
 
