@@ -1,6 +1,6 @@
 //TWEET QUERIES TO THE DATA BASE 
 import mongodb from 'mongodb';
-import { Tweet, ITweet } from '../models/index';
+import { Tweet, ITweet, IUser } from '../models/index';
 
 //TWEETS DATA BASE MANGE SERVICE
 export class TweetDBService {
@@ -29,54 +29,79 @@ export class TweetDBService {
     }
 
     //GET TWEETS BY USER ID
-    public async findTweetsById(id: string | mongodb.ObjectID): Promise<ITweet[] | null> {
-        const documentId = new mongodb.ObjectID(id);
+    // public async findTweetsByUserId(id: string | mongodb.ObjectID): Promise<ITweet[] | null> {
+    //     const documentId = new mongodb.ObjectID(id);
+    //     const projection = { _id: 0 };
+    //     const result = await this.collection.find({ userId: documentId }, { projection }).toArray();
+    //     if (!result) {
+    //         throw new Error('no member');
+    //     }
+    //     else return result;
+    // }
+
+    //GET TWEETS BY USER ID //works
+    public async findTweetsByUserName(userName: string): Promise<ITweet[] | null> {
         const projection = { _id: 0 };
-        return await this.collection.find({ _id: documentId }, { projection }).toArray();
-    }
-
-    //ADD TWEET TO DATA BASE
-    public async add(tweet: ITweet): Promise<void> {
-        if (tweet) {
-            const id = new mongodb.ObjectID();
-            const date = new Date();
-            const tweetToAdd: Tweet = new Tweet(id, id.toHexString(), tweet.userName, tweet.userImage, date, tweet.content, tweet.numberOfStars, tweet.userListThatGaveStar);
-            await this.collection.insertOne(tweetToAdd);
+        const result = await this.collection.find({ userName: userName }, { projection }).toArray();
+        if (!result) {
+            throw new Error('no member');
         }
+        else return result;
     }
 
-    //DELETE TWEET BY ID
-    public async deleteById(id: string | mongodb.ObjectID): Promise<boolean> {
+    //ADD TWEET TO DATA BASE //works stage 1
+    public async add(tweetontent: string, user: IUser): Promise<any> {
+        const id = new mongodb.ObjectID();
+        const date = new Date();
+        const tweetToAdd: Tweet = new Tweet(id, id.toHexString(), user.userName, user.image, date, tweetontent, 0, []);
+        const result = await this.collection.insertOne(tweetToAdd);
+        return result.ops;
+    }
+
+    //DELETE TWEET BY ID //works stage 1
+    public async deleteById(id: string | mongodb.ObjectID, user: IUser): Promise<boolean> {
         const documentId = new mongodb.ObjectID(id);
-        const result = await this.collection.deleteOne({ _id: documentId });
-        return !!result.deletedCount;
+        await this.findById(documentId)//get the tweet for owner validation
+            .then((data) => {
+                if (data && data.userName !== user.userName)//fix this to compare to user id or username
+                    throw new Error('not the owner');
+            })
+        const result = await this.collection.deleteOne({ _id: documentId });//delete the tweet
+        if (!result.deletedCount) {
+            throw new Error('tweet not found');
+        }
+        else
+            return !!result.deletedCount;
     }
 
-    public async findIfUserGaveAStarToTheTweet(tweetId: string | mongodb.ObjectID, userId: string | mongodb.ObjectID): Promise<void> {
+    public async updateStarsCount(tweetId: string | mongodb.ObjectID, userId: string | mongodb.ObjectID): Promise<any> {
         const documentId = new mongodb.ObjectID(tweetId);
-        const projection = { _id: 0, id: 0, userName: 0, userImage: 0, date: 0, content: 0, numberOfStars: 0 };
-        let users: Array<string>;
+        const projection = { _id: 0, id: 0, userName: 0, userImage: 0, date: 0, content: 0 };//returns the users that gave a star array
         let foundUserIndex: number;
-        await this.collection.findOne({ _id: documentId }, { projection })
-            .then(async (data) => {
-                users = data;
-                users.findIndex((u: string | mongodb.ObjectID) => u === userId);
-                if (foundUserIndex > -1) {//user found remove star
-                    users.splice(foundUserIndex, 1);
-                    await this.updateNumberOfStarsOfATweet(tweetId, -1, users);
-                    return 'removed';
-                } else {//user not found add star
-                    users.push(userId.toString());
-                    await this.updateNumberOfStarsOfATweet(tweetId, 1, users);
-                    return 'added';
+        return await this.collection.findOne({ _id: documentId }, { projection })//find the tweet
+            .then(async (data) => {//the tweet
+                if (data) {
+                    foundUserIndex = data.userListThatGaveStar.findIndex((u: string) => u === userId.toString());
+                    if (foundUserIndex > -1) {//user found remove star 
+                        data.userListThatGaveStar.splice(foundUserIndex, 1);
+                        await this.updateNumberOfStarsOfATweet(tweetId, -1, data.userListThatGaveStar);
+                        return { stars: data.numberOfStars - 1, starByMe: false };
+                    } else {//user not found add star
+                        data.userListThatGaveStar.push(userId.toString());
+                        await this.updateNumberOfStarsOfATweet(tweetId, 1, data.userListThatGaveStar);
+                        return { stars: data.numberOfStars + 1, starByMe: true };
+                    }
                 }
-            }).catch((err) => console.log(err))
+                else {
+                    throw new Error('tweet not found');
+                }
+            })
     }
 
     public async updateNumberOfStarsOfATweet(tweetId: string | mongodb.ObjectID, num: number, userList: Array<string>): Promise<boolean> {
         const documentId = new mongodb.ObjectID(tweetId);
-        const resultOfUpdateCount = await this.collection.updateOne({ _id: documentId }, { $inc: { numberOfStars: num } });
-        const resultOfUpdateList = await this.collection.replaceOne({ _id: documentId }, userList);
+        const resultOfUpdateCount = await this.collection.updateOne({ _id: documentId }, { $inc: { numberOfStars: num } });//inc number od stars
+        const resultOfUpdateList = await this.collection.replaceOne({ _id: documentId }, { $set: { userListThatGaveStar: userList } });//replace list
         return !!(resultOfUpdateCount.result && resultOfUpdateList.result);
     }
 }

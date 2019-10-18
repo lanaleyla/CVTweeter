@@ -7,7 +7,7 @@ export function validateId(req: Request, res: Response, next: NextFunction) {
     const id = req.params.id;
     const result = joi.validate({ id: id }, userSchema);
     if (result.error !== null) {
-        throw new Error("id input");
+        throw new Error("id format");
     }
     else next();
 }
@@ -16,7 +16,7 @@ export function validateId(req: Request, res: Response, next: NextFunction) {
 export function validateName(req: Request, res: Response, next: NextFunction) {
     const result = joi.validate({ userName: req.body.userName }, userSchema);//notice that the userName is in the body
     if (result.error !== null) {
-        throw new Error("name input");
+        throw new Error("user name input");
     }
     else next();
 }
@@ -25,7 +25,7 @@ export function validateName(req: Request, res: Response, next: NextFunction) {
 export function validateEmail(req: Request, res: Response, next: NextFunction) {
     const result = joi.validate({ content: req.body.content }, userSchema);//notice user email is in the body
     if (result.error !== null) {
-        throw new Error("email input");
+        throw new Error("email input");//check this
     }
     else next();
 }

@@ -19,7 +19,11 @@ export class UserDBService {
     public async findById(id: string | mongodb.ObjectID): Promise<IUser | null> {//GET USER BY ID
         const documentId = new mongodb.ObjectID(id);
         const projection = { _id: 0 };
-        return await this.collection.findOne({ _id: documentId }, { projection });
+        const result = await this.collection.findOne({ _id: documentId }, { projection });
+        if (!result) {
+            throw new Error('no member')
+        }
+        else return result;
     }
 
     //GET USER BY EMAIL
@@ -38,7 +42,7 @@ export class UserDBService {
     public async add(user: IUser): Promise<any> {
         const id = new mongodb.ObjectID();
         const userToAdd: User = new User(id, id.toHexString(), user.userName, user.email, user.image, new Date(), new Date());
-        const result= await this.collection.insertOne(userToAdd);
+        const result = await this.collection.insertOne(userToAdd);
         return result.ops;
     }
 

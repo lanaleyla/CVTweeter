@@ -10,7 +10,7 @@ export function clientErrorHandler(err: Error, req: Request, res: Response, next
 //catch input errors(name.length<3 or id.length>36)
 export function validationErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
   console.log(err.message);
-  if (err.message === 'user name input' || err.message === 'id format' || err.message === 'password input' || err.message === 'invalid credentials' || err.message === 'content input') {
+  if (err.message === 'user name input' || err.message === 'id format' || err.message === 'password input' || err.message === 'invalid credentials' || err.message === 'content input' || err.message === 'email input') {
     res.status(400);
     res.send(`${err.message} error`);
   }

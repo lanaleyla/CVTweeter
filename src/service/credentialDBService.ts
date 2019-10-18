@@ -24,7 +24,7 @@ export class CredentialDBService {
 
     //ADD CREDENTIAL TO DATA BASE
     public async addCredential(credential: ICredential): Promise<any> {
-        const id = new mongodb.ObjectID();
+        const id = new mongodb.ObjectID(credential.id);
         const salt = await bcrypt.genSalt(10);
         const pass = await bcrypt.hash(credential.password, salt);
         const credentialToAdd = new UserCredential(id, credential.id, credential.email, pass);

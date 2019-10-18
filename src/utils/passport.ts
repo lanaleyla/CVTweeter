@@ -4,6 +4,7 @@ import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
 //import { getSecretKey } from './config';
 import { UserCredential } from '../models';
 import { CredentialDBService } from '../service/credentialDBService';
+import { LocalStorageService } from '../service/localStorageService';
 import { getDb } from '../middleware/store';
 import bcrypt from 'bcrypt';
 
@@ -15,34 +16,57 @@ export function initPassport() {
         },
         (email, password, callback) => {
             const credentials = new CredentialDBService(getDb()!);
+            console.log(email);
             credentials.findCredentialByEmail(email)
-                .then(data => {
+                .then((data) => {
                     if (data) {
                         bcrypt.compare(password, data.password, function (err, res) {
                             if (res) {
                                 callback(null, data, { message: 'succeeded' });
                             } else {
-                                console.log('error in login, please try again');
-                                callback(null, false, { message: 'failed' });
+                                callback(null, false, { message: 'invalid credentials' });
                             }
-                        });
+                            //callback(null, data, { message: 'succeeded' });//only this was here
+                        })
+                    }
+                    else {
+                        callback(null, false, { message: 'no member' });
                     }
                 })
-                .catch((err) => {
-                    callback(null, false, { message: 'failed' });
-                })
-        }
-    ));
+                .catch(err => console.log(err))
+            //  .then(data => {
+            //      console.log(data);
+            // if (data) {
+            // bcrypt.compare(password, user.password, function (err, res) {
+            //     if (res) {
+            //         callback(null, user, { message: 'succeeded' });
+            //     } else {
+            //         callback(null, false, { message: 'invalid credentials' });
+            //     }
+            // })
+        }));
+    // .catch((err) => {
+    //     console.log('hey in the catch', err.message);
+    //     //callback(null, false, { message: 'no member' });
+    // })
+
 
     passport.use(new JwtStrategy(
         {
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             secretOrKey: 'vas_adelante',
         },
-        // in this case the user credential is actually the same as jwtPayload
-        // can consider simply passing jwtPayload, however it might be stale (common though)
-        // trade-off: lightweight token vs. required info for most API's to reduce user re-query needs
-        (jwtPayload: UserCredential, callback) =>
-            callback(null, jwtPayload),
+        (jwtPayload: UserCredential, callback) => {
+            const localStorageL = new LocalStorageService();
+            localStorageL.setLocalStorage('userId', jwtPayload.id);
+            callback(null, jwtPayload);
+            // usually this would be a database call:
+            //   var user = users[_.findIndex(users, {id: jwt_payload.id})];
+            //   if (user) {
+            //     next(null, user);
+            //   } else {
+            //     next(null, false);
+            //   }
+        }
     ));
 }

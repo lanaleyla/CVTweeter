@@ -12,8 +12,9 @@ const jwtSecret = 'vas_adelante';
 export function loginUser(req: express.Request, res: express.Response, next: express.NextFunction) {
     passport.authenticate('local', { session: false }, (err: Error, user: any, info: IVerifyOptions) => {
         if (err || !user) {
-            return res.status(400).send({
-                message: 'Failed',
+            console.log('no user');
+            return res.status(400).send({//maybe delete
+                message: err,
                 user,
             });
         }
@@ -21,12 +22,13 @@ export function loginUser(req: express.Request, res: express.Response, next: exp
             if (error) {
                 res.send(error);
             }
+            console.log('the user is', user);
             const store = resolveStore(res);
             store.users.replaceLastLogin(user.id)
-            .catch(err=>next(err))
+                .then(data => console.log(data))
+                .catch(err => next(err))
             const token = jwt.sign(user, jwtSecret);//CREATE A TOKEN
             return res.send({ user, token });
         });
     })(req, res);
 }
-

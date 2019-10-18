@@ -5,7 +5,7 @@ import { callTest } from './controllers/httpRequests';
 
 async function init() {
   await connectDb(); //CONNECT TO DATA BASE
-  sleep(1000);
+  //sleep(1000);
   //createDataBase();
 
   const port = getConfig('PORT', 3000);
@@ -22,7 +22,7 @@ async function init() {
 
     //closeConnection
   });
-  await callTest();
+ // await callTest();
 }
 
 init().catch(err => console.log('Error', err));

@@ -20,11 +20,7 @@ export function getUserById(req: Request, res: Response, next: NextFunction) {
             res.send(data);
             res.status(200);
         })
-        .catch((err) => {
-            // No member: 404
-            // Bad id format: 400
-            next(err);
-        })
+        .catch((err) => next(err))
 }
 
 export function getUserByEmail(req: Request, res: Response, next: NextFunction) {
@@ -51,7 +47,7 @@ export function updateUsersLastLoginById(req: Request, res: Response, next: Next
 
 export function getUsersTweets(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
-    store.tweets.findTweetsById(req.params.id)
+    store.tweets.findTweetsByUserName(req.params.userName)
         .then((data) => {
             res.send(data);
             res.status(200);
