@@ -1,9 +1,11 @@
 <div class='tweetContainer'>
-    {{tweet.userName}}-{{tweet.date}}
+    {{tweet.userName}} - {{tweet.date}}
     <div>
         {{tweet.content}}
     </div>
-    <div>
-        {{tweet.numberOfStars}}
+    <div class='tweetRating'>
+        <span class='numberOfStars'>{{tweet.numberOfStars}}</span>
+        <mat-icon svgIcon="grade-24px" aria-hidden="false" aria-label="star"></mat-icon>
     </div>
+    <button value="sda" (click)='sendRequest()'>clicl me</button>
 </div>

@@ -1,1 +1,8 @@
-<p>create-tweet works!</p>
+<div class='newTweet'>
+    <textarea maxlength="240" cols="50%" rows="8" [(ngModel)]='tweetContent'></textarea>
+    <div class='charachtersCountUnit'>
+        <span class='count errorMsg' *ngIf='showMaxLengthErrorMessage'>{{errorMessage}}</span>
+        <span class='count'>{{ tweetContent.length}}/{{maxCount}}</span>
+        <button mat-button mat-raised-button color="primary" (click)='post()'>Post</button>
+    </div>
+</div>

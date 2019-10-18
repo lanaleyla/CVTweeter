@@ -1,0 +1,6 @@
+<mat-toolbar-row class='container'>
+    <button mat-button (click)="display('home')">{{'header.home' | translate}}</button>
+    <button *ngIf="email===''" mat-button (click)="display('login')">{{'header.login'| translate}}</button>
+    <button *ngIf="email===''" mat-button (click)="display('register')">{{'header.register'| translate }}</button>
+    <button *ngIf="email!==''" mat-button (click)="logout()">{{'header.logout'| translate }}</button>
+</mat-toolbar-row>

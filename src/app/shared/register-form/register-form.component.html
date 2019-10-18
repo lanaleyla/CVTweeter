@@ -1,4 +1,4 @@
-<form [formGroup]='contactForm' class="registerForm">
+<form [formGroup]='contactForm' class="registerForm" (ngSubmit)='onSubmit()'>
     <div class='title'> Register</div>
     <div class='inputContainer'>
         <mat-form-field>
@@ -7,17 +7,16 @@
         </mat-form-field>
         <mat-form-field>
             <input matInput placeholder="UserName" formControlName='username' required>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type='password' matInput placeholder="Passward" formControlName='passward' required>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            <input type='password' matInput placeholder="Password" formControlName='password' required>
+            <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
         </mat-form-field>
         <div class='imageInput'>
             <label>User Image(optional)</label>
             <input type='file' placeholder="Image" value='Image'>
         </div>
-        <button type='submit' class='buttons' mat-raised-button color="primary" [disabled]="!contactForm.valid"
-            (click)='register()'>Register</button>
+        <button type='submit' class='buttons' mat-raised-button color="primary" [disabled]="!contactForm.valid">Register</button>
     </div>
 </form>

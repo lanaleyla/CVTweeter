@@ -1,9 +1,17 @@
 <mat-toolbar color="primary">
-    <mat-toolbar-row>
+    <mat-toolbar-row class='container'>
         <div class="example-button-row">
-            <button mat-button (click)="display('home')">Home</button>
-            <button mat-button (click)="display('login')">Login</button>
-            <button mat-button (click)="display('register')">Register</button>
+            <button mat-button>
+                <img class='menuIcon' (click)='openSidebar()'
+                    src='https://icon-library.net/images/white-menu-icon-png/white-menu-icon-png-18.jpg'>
+            </button>
+
+            <button mat-button (click)="display('home')">{{'header.home' | translate}}</button>
+            <button *ngIf="email===''" mat-button (click)="display('login')">{{'header.login'| translate}}</button>
+            <button *ngIf="email===''" mat-button
+                (click)="display('register')">{{'header.register'| translate }}</button>
+            <button *ngIf="email!==''" mat-button (click)="logout()">{{'header.logout'| translate }}</button>
         </div>
+        <app-languages></app-languages>
     </mat-toolbar-row>
 </mat-toolbar>

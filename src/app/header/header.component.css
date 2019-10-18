@@ -1,3 +1,8 @@
-/* .toolBar{
-    color: "primary";
-} */
+.container {
+    justify-content: space-between;
+}
+
+.menuIcon {
+    height: 40px;
+    width: 40px;
+}

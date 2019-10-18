@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { PageNavigationService } from '../core/services/pageNavigationService';
 import { TranslateService } from '@ngx-translate/core';
+import { PageNavigationService } from '../core/services/pageNavigationService';
 import { LoginService } from '../core/services/loginService';
-import { Observable, pipe } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: 'app-side-bar',
+  templateUrl: './side-bar.component.html',
+  styleUrls: ['./side-bar.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class SideBarComponent implements OnInit {
 
   userEmail: Observable<string>;
   email: string;
@@ -30,13 +30,12 @@ export class HeaderComponent implements OnInit {
     this.navigationService.navigate(page);
   }
 
-  openSidebar(){
+  closeSidebar(){
     
   }
 
   logout() {
     this.loginService.email = '';
-    localStorage.removeItem('token');
   }
 
 }

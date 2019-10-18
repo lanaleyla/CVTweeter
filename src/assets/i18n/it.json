@@ -1,0 +1,20 @@
+{
+    "header": {
+        "home": "Casa",
+        "login": "Accesso",
+        "register": "Registrati",
+        "logout":"disconnettersi"
+    },
+    "login": {
+        "title": "Accesso",
+        "email": "E-mail",
+        "password": "Parola d'ordine"
+    },
+    "register": {
+        "title": "Registrati",
+        "email": "E-mail",
+        "username": "Nome Utente",
+        "password": "Parola D'ordine",
+        "userImage": "Immagine Dell'Utente"
+    }
+}

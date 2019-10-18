@@ -1,9 +1,23 @@
-.tweetContainer{
+.tweetContainer {
     display: flex;
     flex-flow: column;
     flex-wrap: wrap;
     height: 125px;
-    width: 100%;
     background-color: #bfd7f5;
+    border: 1px solid #bfd7f5;
+    border-radius: 5px;
     margin-bottom: 10px;
+    padding: 5px;
+    justify-content: space-between;
+}
+
+.tweetRating {
+    display: flex;
+    flex-flow: row;
+    align-self: flex-end;
+}
+
+.numberOfStars {
+    align-self: center;
+    /* margin: 5px; */
 }
