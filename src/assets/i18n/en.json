@@ -3,18 +3,38 @@
         "home": "Home",
         "login": "Login",
         "register": "Register",
-        "logout":"Logout"
+        "logout": "Logout"
     },
     "login": {
         "title": "Login",
         "email": "Email",
-        "password": "password"
+        "password": "password",
+        "submit": "Login",
+        "enterValueMsg":"You must enter a value",
+        "invalidEmailMsg":"Not a valid email",
+        "invalidCredentials":"Email or passport are incorrect"
     },
     "register": {
         "title": "Register",
         "email": "Email",
         "username": "UserName",
         "password": "Password",
-        "userImage": "User Image"
+        "passwordHint": "Min 8 characters, one capital and one number",
+        "userImage": "User Image (optional)",
+        "submit": "Register",
+        "enterValueMsg":"You must enter a value",
+        "invalidPassword":"Invalid password",
+        "invalidEmailMsg":"Not a valid email",
+        "nameExistsMsg":"User name already exists",
+        "emailExistsMsg":"Email already exists",
+        "duplicateUser":"User already exist"
+    },
+    "createTweet":{
+        "entertext":"Enter text here ...",
+        "submit":"post",
+        "maxCharsErrorMsg":"You have reached to maximum number of charachters allowed!"
+    },
+    "guard":{
+        "confirmMsg":"Are you sure?"
     }
 }

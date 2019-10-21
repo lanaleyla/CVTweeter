@@ -1,10 +1,10 @@
-.newTweet{
+.newTweet {
     display: flex;
     flex-flow: column;
     margin: 20px;
 }
 
-.charachtersCountUnit{
+.charachtersCountUnit {
     display: flex;
     flex-flow: row;
     flex-wrap: wrap;
@@ -13,12 +13,23 @@
     align-self: flex-end;
 }
 
-.count{
+.count {
     text-align: center;
     padding: 0px 10px 0px 0px;
     align-self: center;
 }
 
-.errorMsg{
+.errorMsg {
     color: #0e1ac2;
+}
+
+.content {
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #aab8e9;
+    border-radius: 4px;
+    background-color: #fff;
+    font-size: 16px;
+    resize: none;
 }

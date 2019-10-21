@@ -1,17 +1,19 @@
 <mat-toolbar color="primary">
     <mat-toolbar-row class='container'>
-        <div class="example-button-row">
-            <button mat-button>
+        <div>
+            <button mat-button class='menuIconButton'>
                 <img class='menuIcon' (click)='openSidebar()'
                     src='https://icon-library.net/images/white-menu-icon-png/white-menu-icon-png-18.jpg'>
             </button>
-
-            <button mat-button (click)="display('home')">{{'header.home' | translate}}</button>
-            <button *ngIf="email===''" mat-button (click)="display('login')">{{'header.login'| translate}}</button>
-            <button *ngIf="email===''" mat-button
-                (click)="display('register')">{{'header.register'| translate }}</button>
-            <button *ngIf="email!==''" mat-button (click)="logout()">{{'header.logout'| translate }}</button>
+            <div class='menuOptions'>
+                <button mat-button (click)="display('home')">{{'header.home' | translate}}</button>
+                <button *ngIf="name===''" mat-button (click)="display('login')">{{'header.login'| translate}}</button>
+                <button *ngIf="name===''" mat-button
+                    (click)="display('register')">{{'header.register'| translate }}</button>
+                <button *ngIf="name!==''" mat-button (click)="logout()">{{'header.logout'| translate }}</button>
+            </div>
         </div>
         <app-languages></app-languages>
     </mat-toolbar-row>
 </mat-toolbar>
+

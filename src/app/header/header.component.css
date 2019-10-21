@@ -6,3 +6,23 @@
     height: 40px;
     width: 40px;
 }
+
+.menuIconButton {
+    display: none;
+}
+
+.menuOptions {
+    display: inline-flex;
+}
+
+@media screen and (max-width: 600px) {
+    .menuIconButton {
+        display: inline-flex;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .menuOptions {
+        display: none;
+    }
+}

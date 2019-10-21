@@ -1,0 +1,36 @@
+<div class='newTweet'>
+    <textarea class='content' maxlength='240' [(ngModel)]='tweetContent'
+        placeholder="{{'createTweet.entertext' | translate }}"></textarea>
+    <div class='charachtersCountUnit'>
+        <span class='count errorMsg'
+            *ngIf='showMaxLengthErrorMessage'>{{'createTweet.maxCharsErrorMsg' | translate}}</span>
+        <span class='count'>{{ tweetContent.length}}/{{maxCount}}</span>
+        <button mat-button mat-raised-button color="primary"
+            (click)='postTweet()'>{{'createTweet.submit' | translate}}</button>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <input type='text' [(ngModel)]='tweetContent' placeholder='Enter text here...' /> -->

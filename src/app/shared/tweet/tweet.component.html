@@ -1,11 +1,27 @@
-<div class='tweetContainer'>
-    {{tweet.userName}} - {{tweet.date}}
-    <div>
-        {{tweet.content}}
+<div class='tweetContainer' *ngIf='tweet'>
+    <div class='container'>
+        <img class='userImage'
+            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDiE9-YuIWDkhz8KTTldzrcwaxQeu9BJIqF98tp275cDnOb8Wl'
+            alt='{{tweet.userName}}'>
+        <div class='userNameAndContent'>
+            <div class='userNameAndDate'>
+                <button class='userNameButton' type='button' (click)='showUserProfile()'>
+                    <mat-icon svgIcon='flash' aria-hidden='false' aria-label='flash_on'></mat-icon>
+                    {{tweet.userName}}
+                </button>
+                <div class='date'>{{tweetDate}}</div>
+            </div>
+            <div class='content'>{{tweet.content}}</div>
+        </div>
     </div>
     <div class='tweetRating'>
         <span class='numberOfStars'>{{tweet.numberOfStars}}</span>
-        <mat-icon svgIcon="grade-24px" aria-hidden="false" aria-label="star"></mat-icon>
+        <mat-icon matRipple svgIcon='star' aria-hidden='false' aria-label='star' (click)='startTweet()'>
+            {{tweet.numberOfStars}}</mat-icon>
+        <div *ngIf='(user | async)'>
+            <mat-icon matRipple svgIcon='reply' aria-hidden='false' aria-label='reply' (click)='reply()'></mat-icon>
+            <mat-icon *ngIf='deleteOption' matRipple svgIcon='delete' aria-hidden='false' aria-label='delete' (click)='deleteTweet()'>
+            </mat-icon>
+        </div>
     </div>
-    <button value="sda" (click)='sendRequest()'>clicl me</button>
 </div>

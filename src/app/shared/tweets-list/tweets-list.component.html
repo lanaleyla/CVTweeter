@@ -1,6 +1,6 @@
 <div>
     <ul class='tweetsList'>
-        <li *ngFor='let tweet of list'>
+        <li *ngFor='let tweet of (tweetList| async)'>
             <app-tweet [tweet]='tweet'></app-tweet>
         </li>
     </ul>

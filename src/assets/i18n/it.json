@@ -3,18 +3,38 @@
         "home": "Casa",
         "login": "Accesso",
         "register": "Registrati",
-        "logout":"disconnettersi"
+        "logout": "disconnettersi"
     },
     "login": {
         "title": "Accesso",
         "email": "E-mail",
-        "password": "Parola d'ordine"
+        "password": "Parola d'ordine",
+        "submit": "Accesso",
+        "enterValueMsg": "Devi inserire un valore",
+        "invalidEmailMsg": "E-mail non valida",
+        "invalidCredentials": "E-mail o passaporto non sono corretti"
     },
     "register": {
         "title": "Registrati",
         "email": "E-mail",
         "username": "Nome Utente",
         "password": "Parola D'ordine",
-        "userImage": "Immagine Dell'Utente"
+        "passwordHint": "Min 8 caratteri, una maiuscola e un numero",
+        "userImage": "Immagine Dell'Utente (opzionale)",
+        "submit": "Registrati",
+        "enterValueMsg": "Devi inserire un valore",
+        "invalidPassword": "Password non valida",
+        "invalidEmailMsg": "E-mail non valida",
+        "nameExistsMsg": "Il nome utente esiste già",
+        "emailExistsMsg": "Il l'e-mail esiste già",
+        "duplicateUser":"utente esiste già"
+    },
+    "createTweet": {
+        "entertext": "Inserisci il testo qui ...",
+        "submit": "inviare",
+        "maxCharsErrorMsg": "Hai raggiunto il numero massimo consentito di caratteri!"
+    },
+    "guard": {
+        "confirmMsg": " sei sicuro?"
     }
 }

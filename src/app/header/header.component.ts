@@ -1,18 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { PageNavigationService } from '../core/services/pageNavigationService';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
-import { LoginService } from '../core/services/loginService';
-import { Observable, pipe } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { PageNavigationService, LoginService } from '../core/services/index';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
 
-  userEmail: Observable<string>;
-  email: string;
+  userName: Observable<string>;
+  name: string;
+  sub: Subscription;
+  @Output() clickOnMenuEvent = new EventEmitter();
 
   constructor(public translate: TranslateService, private navigationService: PageNavigationService, private loginService: LoginService) {
     const browserLang = translate.getBrowserLang();
@@ -20,23 +21,33 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userEmail = this.loginService.userEmailObservable;
-    this.userEmail.subscribe(
-      data => this.email = data //change it to map
+    this.userName = this.loginService.userUserNameObservable;
+    this.sub = this.userName.subscribe(
+      data => this.name = data //change it to map
     );
   }
 
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
+  //display chosen page
   display(page: string) {
     this.navigationService.navigate(page);
   }
 
-  openSidebar(){
-    
+  //open side bar nav
+  openSidebar() {
+    this.clickOnMenuEvent.emit(true);
   }
 
+  //user logs out
   logout() {
-    this.loginService.email = '';
+    localStorage.removeItem('userName');
+    this.loginService.username = ''; 
     localStorage.removeItem('token');
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
   }
 
 }

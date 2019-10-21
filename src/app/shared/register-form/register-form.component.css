@@ -20,11 +20,26 @@
 .imageInput {
     display: flex;
     flex-flow: column;
-    margin: 5px;
+    margin-top: 15px;
 }
 
 .buttons {
     width: fit-content;
     margin-top: 30px;
     align-self: center;
+}
+
+.errorMsg {
+    color: #ff0000;
+}
+
+.spinner {
+    padding: 15px;
+    align-self: center;
+}
+
+@media screen and (max-width: 600px) {
+    .registerForm {
+        width: 250px;
+    }
 }

@@ -1,5 +1,4 @@
-<div *ngIf='user'>
-        <app-create-tweet></app-create-tweet>
-        <!-- <router-outlet></riuter-outlet> with referance-->
+<div *ngIf="user!==''">
+        <app-create-tweet (clickOnPostEvent)='updateTweets($event)'></app-create-tweet>
 </div>
-<app-tweets-list></app-tweets-list>
+<app-tweets-list [updateTweets]='updateTweet'></app-tweets-list>

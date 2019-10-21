@@ -1,8 +1,13 @@
 .tweetsList {
     display: flex;
     flex-flow: column;
-    flex-wrap: wrap;
     list-style: none;
     margin: 20px;
-    padding: 0px;
+    padding: 20px 0px 0px 0px;
+}
+
+@media screen and (max-width: 600px) {
+    .tweetsList {
+        margin: 0px;
+    }
 }

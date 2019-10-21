@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { PageNavigationService } from '../core/services/pageNavigationService';
 import { LoginService } from '../core/services/loginService';
-import { Observable } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-side-bar',
@@ -11,18 +10,16 @@ import { Observable } from 'rxjs';
 })
 export class SideBarComponent implements OnInit {
 
-  userEmail: Observable<string>;
-  email: string;
+  sub: Subscription;
+  name: string;
+  @Output() clickCloseMenuEvent = new EventEmitter();
 
-  constructor(public translate: TranslateService, private navigationService: PageNavigationService, private loginService: LoginService) {
-    const browserLang = translate.getBrowserLang();
-    translate.use(browserLang.match(/en|it/) ? browserLang : 'en');
+  constructor(private navigationService: PageNavigationService, private loginService: LoginService) {
   }
 
   ngOnInit() {
-    this.userEmail = this.loginService.userEmailObservable;
-    this.userEmail.subscribe(
-      data => this.email = data //change it to map
+    this.sub = this.loginService.userUserNameObservable.subscribe(
+      data => this.name = data 
     );
   }
 
@@ -30,12 +27,13 @@ export class SideBarComponent implements OnInit {
     this.navigationService.navigate(page);
   }
 
-  closeSidebar(){
-    
+  closeSidebar() {
+    this.clickCloseMenuEvent.emit(false);
   }
 
   logout() {
-    this.loginService.email = '';
+    localStorage.removeItem('userName');
+    this.loginService.username = '';
   }
 
 }

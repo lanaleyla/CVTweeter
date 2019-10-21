@@ -1,11 +1,5 @@
 .tweetContainer {
-    display: flex;
-    flex-flow: column;
-    flex-wrap: wrap;
-    height: 125px;
-    background-color: #bfd7f5;
-    border: 1px solid #bfd7f5;
-    border-radius: 5px;
+    border-bottom: 1px solid #211d57;
     margin-bottom: 10px;
     padding: 5px;
     justify-content: space-between;
@@ -14,10 +8,67 @@
 .tweetRating {
     display: flex;
     flex-flow: row;
-    align-self: flex-end;
+    justify-content: flex-end;
 }
 
 .numberOfStars {
     align-self: center;
-    /* margin: 5px; */
+}
+
+.userNameButton {
+    outline: none;
+    background-color: #fff;
+    border: none;
+    padding: 5px;
+    font-size: 18px;
+    text-align: left;
+    cursor: pointer;
+    text-decoration: none;
+    color: #211d57;
+}
+
+.userNameButton:hover {
+    text-decoration: underline;
+}
+
+.userNameAndDate {
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    justify-content: left;
+    font-size: 18px;
+}
+
+.userImage {
+    width: 60px;
+    height: 60px;
+    border: 2px solid #211d57;
+    border-radius: 20px;
+}
+
+.userNameAndContent {
+    display: flex;
+    flex-flow: column;
+}
+
+.date {
+    align-self: center;
+    color: #564fb3;
+}
+
+.content {
+    margin-left: 5px;
+    font-size: 15px;
+}
+
+.container {
+    display: flex;
+    flex-flow: row;
+}
+
+@media screen and (max-width:480px) {
+    .userImage {
+        width: 45px;
+        height: 45px;
+    }
 }

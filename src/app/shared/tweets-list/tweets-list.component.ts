@@ -1,34 +1,61 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
-import { ITweet } from 'src/app/core/models';
+import { ITweet } from '../../core/models';
+import { TweetsService } from '../../core/services/tweets.service';
 
 @Component({
   selector: 'app-tweets-list',
   templateUrl: './tweets-list.component.html',
   styleUrls: ['./tweets-list.component.css']
 })
-export class TweetsListComponent implements OnInit {
+export class TweetsListComponent implements OnInit, OnDestroy, OnChanges {
 
-  list = [
-    {
-      "id": "1",
-      "userName": "lana",
-      "date": "12/10/15",
-      "content": "love enriqe iglesias",
-      "numberOfStars": 0
-    },
-    {
-      "id": "12",
-      "userName": "anastasia",
-      "date": "14/10/16",
-      "content": "love dancing",
-      "numberOfStars": 0
-    }
-  ]
-  tweetsList: Observable<ITweet[]>;
-  constructor() { }
+  @Input() userName: string = '';  //user name input
+  @Input() updateTweets: boolean;
+  intervalId;
+  tweetList: Observable<ITweet[]>; //list of tweets
+  constructor(private tweetsService: TweetsService) { }
 
   ngOnInit() {
+    if (this.userName === '') {
+      this.getTweets()
+    }
+    else {
+      this.getTweetsByUserName();
+    }
+    this.updatedTweetsList();
   }
 
+  ngOnDestroy() {
+    this.userName === '';
+    clearInterval(this.intervalId);
+  }
+
+  ngOnChanges() {
+    if (this.updateTweets) {
+      this.tweetList = this.tweetsService.getAllTweets();
+      this.updateTweets = false;
+    }
+  }
+
+  //get updated tweet list every 10 seconds
+  updatedTweetsList() {
+    if (this.userName === '')
+      this.intervalId = setInterval(() => {
+        this.getTweets()
+      }, 10000);
+    else {
+      this.intervalId = setInterval(() => { this.getTweetsByUserName() }, 10000);
+    }
+  }
+
+  //get all tweeets
+  getTweets() {
+    this.tweetList = this.tweetsService.getAllTweets();
+  }
+
+  //get tweets by userName
+  getTweetsByUserName() {
+    this.tweetList = this.tweetsService.getTweetsByUserName(this.userName);
+  }
 }

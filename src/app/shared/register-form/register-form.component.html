@@ -1,22 +1,38 @@
 <form [formGroup]='contactForm' class="registerForm" (ngSubmit)='onSubmit()'>
-    <div class='title'> Register</div>
+    <div class='title'> {{'register.title' | translate}}</div>
     <div class='inputContainer'>
         <mat-form-field>
-            <input matInput placeholder="Email" formControlName='email' required email>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            <input matInput placeholder="{{'register.email' | translate}}" formControlName='email' required>
+            <mat-error *ngIf="emailField.invalid && emailField.errors.required">{{'register.enterValueMsg' | translate}}
+            </mat-error>
+            <mat-error *ngIf="emailField.invalid && emailField.errors.email">{{'register.invalidEmailMsg' | translate}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input matInput placeholder="UserName" formControlName='username' required>
-            <mat-error *ngIf="username.invalid">{{getErrorMessage()}}</mat-error>
+            <input matInput placeholder="{{'register.username' | translate}}" formControlName='username' required>
+            <mat-error *ngIf="usernameField.invalid">{{'register.enterValueMsg'| translate}}</mat-error>
         </mat-form-field>
-        <mat-form-field>
-            <input type='password' matInput placeholder="Password" formControlName='password' required>
-            <mat-error *ngIf="password.invalid">{{getErrorMessage()}}</mat-error>
+        <mat-form-field hintLabel="{{'register.passwordHint' | translate}}">
+            <input type='password' #input matInput placeholder="{{'register.password' | translate}}"
+                formControlName='password' required>
+            <mat-error *ngIf="passwordField.invalid && passwordField.errors.required">
+                {{'register.enterValueMsg'| translate}}</mat-error>
+            <mat-error *ngIf="passwordField.invalid && passwordField.errors.pattern">
+                {{'register.invalidPassword'| translate}}</mat-error>
         </mat-form-field>
         <div class='imageInput'>
-            <label>User Image(optional)</label>
+            <label>{{'register.userImage' | translate}}</label>
             <input type='file' placeholder="Image" value='Image'>
         </div>
-        <button type='submit' class='buttons' mat-raised-button color="primary" [disabled]="!contactForm.valid">Register</button>
+        <span class='errorMsg' *ngIf='duplicateName'>{{'register.duplicateUser'| translate}}</span>
+        <button type='submit' class='buttons' mat-raised-button color="primary"
+            [disabled]="!contactForm.valid">{{'register.submit' | translate}}</button>
+        <div class='spinner' *ngIf='spin'>
+            <mat-spinner [diameter]='50' aria-label='signing In'></mat-spinner>
+        </div>
     </div>
 </form>
+
+
+
+<!-- <span class='errorMsg' *ngIf='duplicateEmail'>{{'register.emailExistsMsg'| translate}}</span> -->

@@ -1,13 +1,24 @@
 <form [formGroup]='contactForm' class="loginForm" (ngSubmit)='onSubmit()'>
-    <div class='title'> Login</div>
+    <div class='title'>{{'login.title' | translate}}</div>
     <div class='inputContainer'>
         <mat-form-field>
-            <input matInput placeholder="Email" formControlName='email' required email>
+            <input matInput placeholder="{{'login.email' | translate}}" formControlName='email' required>
+            <mat-error *ngIf="emailField.invalid && emailField.errors.required">{{'login.enterValueMsg'| translate}}
+            </mat-error>
+            <mat-error *ngIf="emailField.invalid && emailField.errors.email">{{'login.invalidEmailMsg'| translate}}
+            </mat-error>
         </mat-form-field>
         <mat-form-field>
-            <input type='password' matInput placeholder="Password" formControlName='password' required>
-            <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+            <input type='password' matInput placeholder="{{'login.password' | translate}}" formControlName='password'
+                required>
+            <mat-error *ngIf="passwordField.invalid && passwordField.errors.required">
+                {{'login.enterValueMsg'| translate}}</mat-error>
         </mat-form-field>
-        <button type='submit' class='buttons' mat-raised-button color="primary" [disabled]="!contactForm.valid" >Login</button>
+        <span class='errorMsg' *ngIf='credentialsError'>{{'login.invalidCredentials'| translate}}</span>
+        <button type='submit' class='buttons' mat-raised-button color="primary"
+            [disabled]="!contactForm.valid">{{'login.submit' | translate}}</button>
+        <div class='spinner' *ngIf='spin'>
+            <mat-spinner  [diameter]='50' aria-label='signing In'></mat-spinner>
+        </div>
     </div>
 </form>

@@ -7,6 +7,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'tweeter';
+  openSideBar=false;
 
-  
+  handleSideBar(event){
+    this.openSideBar = event;
+  }
 }

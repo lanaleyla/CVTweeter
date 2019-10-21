@@ -1,4 +1,8 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<!-- <app-side-bar></app-side-bar> -->
-<app-header></app-header>
-<router-outlet></router-outlet>
+<div *ngIf='openSideBar'>
+    <app-side-bar (clickCloseMenuEvent)='handleSideBar($event)'></app-side-bar>
+</div>
+<app-header (clickOnMenuEvent)='handleSideBar($event)'></app-header>
+<div class='mainContainer'>
+    <router-outlet></router-outlet>
+</div>

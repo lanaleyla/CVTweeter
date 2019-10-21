@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ITweet } from 'src/app/core/models';
 import { DomSanitizer } from '@angular/platform-browser';
-import { MatIconRegistry } from '@angular/material';
-import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
-
+import { MatIconRegistry, MatSnackBar, MatDialog } from '@angular/material';
+import { Observable } from 'rxjs';
+import { ITweet } from '../../core/models/index';
+import { PageNavigationService, LoginService, TweetsService } from '../../core/services/index'; //change to index
+import { ReplyComponent } from '../reply/reply.component';
 
 @Component({
   selector: 'app-tweet',
@@ -14,28 +14,82 @@ import { map } from 'rxjs/operators';
 export class TweetComponent implements OnInit {
 
   @Input() tweet: ITweet;
-  constructor(iconRegistry: MatIconRegistry, sanitizer: DomSanitizer, private http: HttpClient) {
-    iconRegistry.addSvgIcon(
-      'grade-24px',
-      sanitizer.bypassSecurityTrustResourceUrl('assets/icons/grade-24px.svg'));
+  user: Observable<string>; //when user is logged in
+  userName: string;
+  deleteOption: boolean = false;
+  constructor(public dialog: MatDialog, private tweetService: TweetsService, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private navigationService: PageNavigationService, private loginService: LoginService, private snackBar: MatSnackBar) {
+    this.InitalizeIcons();
   }
 
   ngOnInit() {
+    this.user = this.loginService.userUserNameObservable;
+    if (this.tweet.userName === localStorage.getItem('userName')) {
+      this.deleteOption = true;
+    }
   }
 
-  sendRequest() {
-    // this.http.post('http://localhost:3001/api/tweets',{content:'i love anastasia'})//this works
-    // this.http.post('http://localhost:3001/api/tweets/5da2048f067af55dc849c884/star-toggle',{})//this works
-    this.http.post('http://localhost:3001/api/auth/register', { email: 'sasha@gmail.com', password: '123', userName: 'sasha' })
-      .pipe(
-        map(data => {
-          console.log(data);
+  //get a string represantation of tweets date
+  get tweetDate(): string {
+    const d = new Date(this.tweet.date);
+    return d.toLocaleDateString();
+  }
+
+  //redirect to users profile page
+  showUserProfile() {
+    this.navigationService.navigate(`profile/${this.tweet.userName}`);
+  }
+
+  reply() {
+    this.openDialog();
+  }
+  
+  //star a tweet
+  startTweet() {
+    this.tweetService.starATweet(this.tweet.id)
+      .then((data) => console.log(data))
+      .catch(err => {
+        if (err.status === 401)
+          this.navigationService.navigate('login');
+      })
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ReplyComponent, {
+      width: 'auto',
+    });
+  }
+
+  //Delete tweet
+  deleteTweet() {
+    if (confirm("Delete this tweet?")) {
+      this.tweetService.deleteTweet(this.tweet.id)
+        .then(() => {
+          this.snackBar.open('Tweet was deleted', '', { duration: 2000 });
         })
-      )
-      .toPromise()
-      .catch((err) => console.log(err))
+        .catch(err => {
+          if (err.error === 'not the owner error' && err.status === 403) {
+            this.snackBar.open('You can not delete this tweet', '', { duration: 2000 });
+          }
+          else {
+            this.snackBar.open('Problem with deleting tweet', '', { duration: 2000 });
+          }
+        })
+    }
+  }
+
+  //Initialize icons view
+  InitalizeIcons() {
+    this.iconRegistry.addSvgIcon(
+      'star',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/grade-24px.svg'));
+    this.iconRegistry.addSvgIcon(
+      'flash',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/flash_on-24px.svg'));
+    this.iconRegistry.addSvgIcon(
+      'delete',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/delete-24px.svg'));
+    this.iconRegistry.addSvgIcon(
+      'reply',
+      this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/reply-24px.svg'));
   }
 }
-
-
-//    this.http.get('http://localhost:3001/api/members')//this works

@@ -1,0 +1,8 @@
+<div class='userProfile' *ngIf='user'>
+    <div class='user'>
+        <div><mat-icon svgIcon='flash' aria-hidden='false' aria-label='flash_on'></mat-icon>{{user.userName}}</div>
+        <div>Registration date: {{registertiontDate}}</div>
+        <div>Last login date: {{loginDate}}</div>
+    </div>
+    <app-tweets-list [userName]='user.userName'></app-tweets-list>
+</div>
