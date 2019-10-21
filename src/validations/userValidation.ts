@@ -23,7 +23,7 @@ export function validateName(req: Request, res: Response, next: NextFunction) {
 
 //validate content
 export function validateEmail(req: Request, res: Response, next: NextFunction) {
-    const result = joi.validate({ content: req.body.content }, userSchema);//notice user email is in the body
+    const result = joi.validate({ content: req.body.email }, userSchema);//notice user email is in the body
     if (result.error !== null) {
         throw new Error("email input");//check this
     }

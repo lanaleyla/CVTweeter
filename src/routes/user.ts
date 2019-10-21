@@ -4,21 +4,20 @@ import { validateName, validateEmail, validateId } from '../validations/userVali
 
 const router = Router(); //our router
 
-//return all users  //works
+//return all users  
 router.get('/', userController.getAllUsers);
 
-//get user by id //works
+//get user by id 
 router.get('/:id', validateId, userController.getUserById);
 
-//get user by email //works
+//get user by email 
 router.get('/user/:email', userController.getUserByEmail);//add email validation
 
+//get user by userName
 router.get('/profile/:userName', userController.getUserByUserName);//add email validation
 
 //get tweets of a user
 router.get('/:userName/tweets',validateName, userController.getUsersTweets); 
-
-router.get('/:id/tweets',validateName, userController.getUsersTweets); 
 
 export { router as userRouter };
 
