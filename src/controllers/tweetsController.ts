@@ -4,6 +4,7 @@ import { LocalStorageService } from '../service/localStorageService';
 
 const localStorageL = new LocalStorageService();
 
+//GET ALL TWEETS
 export function getAllTweets(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     return store.tweets.all()
@@ -14,17 +15,7 @@ export function getAllTweets(req: Request, res: Response, next: NextFunction) {
         .catch((err) => next(err))
 }
 
-// export function getTweetsOfUserById(req: Request, res: Response, next: NextFunction) {
-//     const store = resolveStore(res);
-//     store.tweets.findByUserName(req.params.userName)
-//         .then((data) => {
-//             res.send(data);
-//             res.status(200);
-//         })
-//         .catch((err) => next(err))
-// }
-
-//fix this to be with userName
+//DELETE TWEET BY ID
 export function deleteTweetById(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.users.findById(localStorageL.getLocalStorage('userId'))
@@ -39,7 +30,7 @@ export function deleteTweetById(req: Request, res: Response, next: NextFunction)
 
 }
 
-//works stage 1
+//GET TWEET BY ID
 export function getTweetById(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.tweets.findById(req.params.id)
@@ -50,7 +41,7 @@ export function getTweetById(req: Request, res: Response, next: NextFunction) {
         .catch((err) => next(err))
 }
 
-//works stage 1
+//POST A TWEET
 export function postTweet(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.users.findById(localStorageL.getLocalStorage('userId'))
@@ -65,6 +56,7 @@ export function postTweet(req: Request, res: Response, next: NextFunction) {
         .catch((err) => next(err))
 }
 
+//TOGGLE A STAR
 export function toggleTweetStar(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.tweets.updateStarsCount(req.params.id, localStorageL.getLocalStorage('userId'))
@@ -75,3 +67,40 @@ export function toggleTweetStar(req: Request, res: Response, next: NextFunction)
         .catch((err) => next(err))
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// export function getTweetsOfUserById(req: Request, res: Response, next: NextFunction) {
+//     const store = resolveStore(res);
+//     store.tweets.findByUserName(req.params.userName)
+//         .then((data) => {
+//             res.send(data);
+//             res.status(200);
+//         })
+//         .catch((err) => next(err))
+// }

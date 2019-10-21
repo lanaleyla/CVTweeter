@@ -1,11 +1,13 @@
 const Joi = require('joi');
 
+//users validation schema:id, userName,email
 export const userSchema = Joi.object().keys({
     id: Joi.string().min(24).max(24),
     userName: Joi.string().alphanum().min(1),
     email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
 })
 
+//tweets validation schema:id, userName,content,numberOfStars
 export const tweetSchema = Joi.object().keys({
     id: Joi.string().min(24).max(24),
     userName: Joi.string().alphanum().min(1),
@@ -13,6 +15,7 @@ export const tweetSchema = Joi.object().keys({
     numberOfStars: Joi.number().min(0),
 })
 
+//credentials validation schema:id,userName,email,password
 export const credentialSchema = Joi.object().keys({
     id: Joi.string().min(24).max(24),
     userName: Joi.string().alphanum().min(1),

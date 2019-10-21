@@ -54,14 +54,19 @@ export class UserDBService {
     }
 
     //UPDATE USERS LAST LOGIN PROPERTY
-    public async replaceLastLogin(id: string | mongodb.ObjectID): Promise<boolean> {
+    public async replaceLastLogin(id: string | mongodb.ObjectID): Promise<IUser | null> {
         const documentId = new mongodb.ObjectID(id);
         const result = await this.collection.updateOne(
             { _id: documentId },
             {
                 $set: { lastLogin: new Date() }
-            });
-        return !!(result.modifiedCount + result.upsertedCount);
+            }).then(() => {
+                return this.findById(documentId)
+            })
+        if (!result) {
+            throw new Error('no member')
+        }
+        else return result;
     }
 }
 

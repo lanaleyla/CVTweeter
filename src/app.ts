@@ -2,10 +2,8 @@ import express from "express";
 import cors from "cors";
 import { logMiddleware } from './middleware/log';
 import { initConfig } from "./utils/config";
-import { userRouter } from './routes/user';
-import { tweetRouter } from './routes/tweet';
+import { userRouter, tweetRouter, loginRegisterRouter } from './routes/index';
 import storeMiddleware from './middleware/store';
-import { loginRouter } from "./routes/login";
 import { initPassport } from './utils/passport';
 import { validationErrorHandler } from "./middleware/error";
 
@@ -20,9 +18,9 @@ app.use(cors());
 app.use(logMiddleware); //works
 
 app.use(storeMiddleware());
-app.use('/api/auth', loginRouter);   //handle request about login/register
-app.use('/api/members', userRouter); //handle requests about products
-app.use('/api/tweets', tweetRouter); //handle requests about categories
+app.use('/api/auth', loginRegisterRouter);   //handle request about login/register
+app.use('/api/members', userRouter);         //handle requests about products
+app.use('/api/tweets', tweetRouter);         //handle requests about categories
 
 app.use(validationErrorHandler);
 

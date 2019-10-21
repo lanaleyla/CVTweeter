@@ -1,3 +1,3 @@
-export { loginRouter } from './login';
+export { loginRegisterRouter } from './loginRegister';
 export { userRouter } from './user';
 export { tweetRouter } from './tweet'; 

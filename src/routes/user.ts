@@ -11,10 +11,14 @@ router.get('/', userController.getAllUsers);
 router.get('/:id', validateId, userController.getUserById);
 
 //get user by email //works
-router.get('/:email', validateEmail, userController.getUserByEmail);
+router.get('/user/:email', userController.getUserByEmail);//add email validation
+
+router.get('/profile/:userName', userController.getUserByUserName);//add email validation
 
 //get tweets of a user
 router.get('/:userName/tweets',validateName, userController.getUsersTweets); 
+
+router.get('/:id/tweets',validateName, userController.getUsersTweets); 
 
 export { router as userRouter };
 

@@ -7,23 +7,37 @@ export function registerUser(req: express.Request, res: express.Response, next: 
     store.users.findByUserName(req.body.userName)//check if user already exists
         .then((data) => {
             if (data) {
-                throw new Error('duplicate user');
+                throw new Error('name exists');
             }
             else {
-                const date = new Date();
-                store.users.add({ id: '', userName: req.body.userName, email: req.body.email, image: '', registrationDate: date, lastLogin: date })
+                store.users.findByEmail(req.body.email)
                     .then((data) => {
-                        store.credentials.addCredential({ id: data[0].id, email: req.body.email, password: req.body.password })
-                            .then((data) => {
-                                res.status(201);
-                                res.send(data);
-                            })
-                            .catch((err) => next(err))
-                    })
-                    .catch((err) => next(err))
+                        if (data) {
+                            throw new Error('email exists');
+                        } else {
+                            const date = new Date();
+                            store.users.add({ id: '', userName: req.body.userName, email: req.body.email, image: '', registrationDate: date, lastLogin: date })
+                                .then((data) => {
+                                    store.credentials.addCredential({ id: data[0].id, email: req.body.email, password: req.body.password })
+                                        .then((data) => {
+                                            res.status(201);
+                                            res.send(data);
+                                        })
+                                        .catch((err) => next(err))
+                                })
+                                .catch((err) => next(err))
+                        }
+                    }).catch((err) => next(err))
+
             }
         })
         .catch((err) => next(err))
+    // store.users.findByEmail(req.body.email)
+    //     .then((data) => {
+    //         if (data) {
+    //             throw new Error('email exists');
+    //         }
+    //     }).catch((err) => next(err))
 }
 
 

@@ -5,8 +5,8 @@ import { validatePassword, validateEmail } from '../validations/credentialValida
 
 const router = Router(); //our router
 
-router.post('/login', loginController.loginUser);
+router.post('/login', loginController.loginUser);//works stage 2
 
-router.post('/register', validatePassword, registerController.registerUser);
+router.post('/register', validatePassword, registerController.registerUser);//works stage 2//email validation fix
 
-export { router as loginRouter };
+export { router as loginRegisterRouter };

@@ -4,7 +4,7 @@ import { Request, Response, NextFunction } from 'express';
 import rootStore, { RootStore } from '../store/root';
 
 const url = getDBUrl('DB_SERVER_URL', '');
-const connection = new MongoDBConnection('mongodb://localhost:27017/lana');//fix this
+const connection = new MongoDBConnection('mongodb://localhost:27017/tweeterProject');//fix this
 
 export async function connectDb(): Promise<void> {
     await connection.connect();

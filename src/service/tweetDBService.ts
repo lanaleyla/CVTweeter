@@ -1,6 +1,9 @@
 //TWEET QUERIES TO THE DATA BASE 
 import mongodb from 'mongodb';
 import { Tweet, ITweet, IUser } from '../models/index';
+import { LocalStorageService } from './localStorageService';
+
+const localStorageL = new LocalStorageService();
 
 //TWEETS DATA BASE MANGE SERVICE
 export class TweetDBService {
@@ -9,10 +12,18 @@ export class TweetDBService {
         this.collection = db.collection('tweets');
     }
 
-    //GET ALL TWEETS
+    //GET ALL TWEETS (AND ASSIGN STARBYME PROPERTY)
     public async all(): Promise<ITweet[]> {//GET ALL TWEETS //change to ITweet
         const projection = { _id: 0 };
-        return await this.collection.find({}, { projection }).toArray();
+        const result = await this.collection.find({}, { projection }).toArray();
+        result.forEach(element => {
+            const foundUserIndex = element.userListThatGaveStar.findIndex((u: string) => u === localStorageL.getLocalStorage('userId'));
+            if (foundUserIndex > -1) {
+                element.starByMe = true;
+            }
+            else element.starByMe = false;
+        })
+        return result;
     }
 
     //GET TWEET BY ID
@@ -28,37 +39,35 @@ export class TweetDBService {
         return await this.collection.find({ userName: userName }, { projection }).toArray();
     }
 
-    //GET TWEETS BY USER ID
-    // public async findTweetsByUserId(id: string | mongodb.ObjectID): Promise<ITweet[] | null> {
-    //     const documentId = new mongodb.ObjectID(id);
-    //     const projection = { _id: 0 };
-    //     const result = await this.collection.find({ userId: documentId }, { projection }).toArray();
-    //     if (!result) {
-    //         throw new Error('no member');
-    //     }
-    //     else return result;
-    // }
-
-    //GET TWEETS BY USER ID //works
+    //GET TWEETS BY USER ID 
     public async findTweetsByUserName(userName: string): Promise<ITweet[] | null> {
         const projection = { _id: 0 };
         const result = await this.collection.find({ userName: userName }, { projection }).toArray();
         if (!result) {
             throw new Error('no member');
         }
-        else return result;
+        else {
+            result.forEach(element => {
+                const foundUserIndex = element.userListThatGaveStar.findIndex((u: string) => u === localStorageL.getLocalStorage('userId'));
+                if (foundUserIndex > -1) {
+                    element.starByMe = true;
+                }
+                else element.starByMe = false;
+            })
+            return result;
+        }
     }
 
-    //ADD TWEET TO DATA BASE //works stage 1
+    //ADD TWEET TO DATA BASE 
     public async add(tweetontent: string, user: IUser): Promise<any> {
         const id = new mongodb.ObjectID();
         const date = new Date();
-        const tweetToAdd: Tweet = new Tweet(id, id.toHexString(), user.userName, user.image, date, tweetontent, 0, []);
+        const tweetToAdd: Tweet = new Tweet(id, id.toHexString(), user.userName, user.image, date, tweetontent, 0, false, []);
         const result = await this.collection.insertOne(tweetToAdd);
         return result.ops;
     }
 
-    //DELETE TWEET BY ID //works stage 1
+    //DELETE TWEET BY ID 
     public async deleteById(id: string | mongodb.ObjectID, user: IUser): Promise<boolean> {
         const documentId = new mongodb.ObjectID(id);
         await this.findById(documentId)//get the tweet for owner validation
@@ -74,6 +83,7 @@ export class TweetDBService {
             return !!result.deletedCount;
     }
 
+    //TOGGLE A STAR
     public async updateStarsCount(tweetId: string | mongodb.ObjectID, userId: string | mongodb.ObjectID): Promise<any> {
         const documentId = new mongodb.ObjectID(tweetId);
         const projection = { _id: 0, id: 0, userName: 0, userImage: 0, date: 0, content: 0 };//returns the users that gave a star array
@@ -98,6 +108,7 @@ export class TweetDBService {
             })
     }
 
+    //UPDATE STARBYME PROPERTY AND USERS THAT GAVE A STAR ARRAY PROPERTY
     public async updateNumberOfStarsOfATweet(tweetId: string | mongodb.ObjectID, num: number, userList: Array<string>): Promise<boolean> {
         const documentId = new mongodb.ObjectID(tweetId);
         const resultOfUpdateCount = await this.collection.updateOne({ _id: documentId }, { $inc: { numberOfStars: num } });//inc number od stars
@@ -109,3 +120,24 @@ export class TweetDBService {
 
 
 
+
+
+
+
+
+    //GET ALL TWEETS
+    // public async all(): Promise<ITweet[]> {//GET ALL TWEETS //change to ITweet
+    //     const projection = { _id: 0 };
+    //     return await this.collection.find({}, { projection }).toArray();
+    // }
+
+       //GET TWEETS BY USER ID
+    // public async findTweetsByUserId(id: string | mongodb.ObjectID): Promise<ITweet[] | null> {
+    //     const documentId = new mongodb.ObjectID(id);
+    //     const projection = { _id: 0 };
+    //     const result = await this.collection.find({ userId: documentId }, { projection }).toArray();
+    //     if (!result) {
+    //         throw new Error('no member');
+    //     }
+    //     else return result;
+    // }

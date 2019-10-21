@@ -23,6 +23,16 @@ export function getUserById(req: Request, res: Response, next: NextFunction) {
         .catch((err) => next(err))
 }
 
+export function getUserByUserName(req: Request, res: Response, next: NextFunction) {
+    const store = resolveStore(res);
+    store.users.findByUserName(req.params.userName)
+        .then((data) => {
+            res.send(data);
+            res.status(200);
+        })
+        .catch((err) => next(err))
+}
+
 export function getUserByEmail(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.users.findByEmail(req.params.email)
