@@ -8,7 +8,7 @@ const router = Router(); //our router
 router.get('/', userController.getAllUsers);
 
 //get user by id 
-router.get('/:id', validateId, userController.getUserById);
+router.get('/:userName', validateName, userController.getUserByUserName);
 
 //get user by email 
 router.get('/user/:email', userController.getUserByEmail);//add email validation
@@ -21,5 +21,5 @@ router.get('/:userName/tweets',validateName, userController.getUsersTweets);
 
 export { router as userRouter };
 
-
+//router.get('/:id', validateId, userController.getUserById);
 

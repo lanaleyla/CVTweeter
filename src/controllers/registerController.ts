@@ -4,19 +4,19 @@ import { IUser, ICredential } from '../models';
 
 export function registerUser(req: express.Request, res: express.Response, next: express.NextFunction) {
     const store = resolveStore(res);
-    store.users.findByUserName(req.body.userName)//check if user already exists
+    store.users.findByEmail(req.body.email)//check if user already exists
         .then((data) => {
             if (data) {
-                throw new Error('name exists');
+                throw new Error('email exists');//findByUserName
             }
             else {
-                store.users.findByEmail(req.body.email)
+                store.users.findByUserName(req.body.userName)
                     .then((data) => {
                         if (data) {
-                            throw new Error('email exists');
+                            throw new Error('name exists');
                         } else {
                             const date = new Date();
-                            store.users.add({ id: '', userName: req.body.userName, email: req.body.email, image: '', registrationDate: date, lastLogin: date })
+                            store.users.add({ id: '', userName: req.body.userName, email: req.body.email, image: req.body.userImage, registrationDate: date, lastLogin: date })
                                 .then((data) => {
                                     store.credentials.addCredential({ id: data[0].id, email: req.body.email, password: req.body.password })
                                         .then((data) => {
@@ -28,16 +28,9 @@ export function registerUser(req: express.Request, res: express.Response, next: 
                                 .catch((err) => next(err))
                         }
                     }).catch((err) => next(err))
-
             }
         })
         .catch((err) => next(err))
-    // store.users.findByEmail(req.body.email)
-    //     .then((data) => {
-    //         if (data) {
-    //             throw new Error('email exists');
-    //         }
-    //     }).catch((err) => next(err))
 }
 
 

@@ -11,7 +11,12 @@ export function clientErrorHandler(err: Error, req: Request, res: Response, next
 //error handler 
 export function validationErrorHandler(err: Error, req: Request, res: Response, next: NextFunction) {
   console.log(err.message);
-  if (err.message === 'user name input' || err.message === 'id format' || err.message === 'password input' || err.message === 'invalid credentials' || err.message === 'content input' || err.message === 'email input') {
+  if(err.message==='request entity too large')
+  {
+    res.status(413);
+    res.send(`${err.message} error`);
+  }
+  else if (err.message === 'user name input' || err.message === 'id format' || err.message === 'password input' || err.message === 'invalid credentials' || err.message === 'content input' || err.message === 'email input') {
     res.status(400);
     res.send(`${err.message} error`);
   }
@@ -21,7 +26,7 @@ export function validationErrorHandler(err: Error, req: Request, res: Response, 
   }
   else if (err.message === 'email exists' ||err.message === 'name exists') {
     res.status(409);
-    res.send(`${err.message} error`)
+    res.send(`${err.message} error`);
   }
   else if (err.message === 'anauthorized') {
     res.status(401);

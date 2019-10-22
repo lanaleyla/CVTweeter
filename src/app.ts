@@ -16,7 +16,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 app.use(logMiddleware); //works
-
 app.use(storeMiddleware());
 app.use('/api/auth', loginRegisterRouter);   //handle request about login/register
 app.use('/api/members', userRouter);         //handle requests about products
