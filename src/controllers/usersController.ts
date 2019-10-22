@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { resolveStore } from '../middleware/store';
 
+//GET ALL USERS
 export function getAllUsers(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     return store.users.all()
@@ -13,6 +14,7 @@ export function getAllUsers(req: Request, res: Response, next: NextFunction) {
         .catch((err) => next(err));
 }
 
+//GET USER BY ID
 export function getUserById(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.users.findById(req.params.id)
@@ -23,6 +25,7 @@ export function getUserById(req: Request, res: Response, next: NextFunction) {
         .catch((err) => next(err))
 }
 
+//GET USER BY NAME
 export function getUserByUserName(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.users.findByUserName(req.params.userName)
@@ -33,6 +36,7 @@ export function getUserByUserName(req: Request, res: Response, next: NextFunctio
         .catch((err) => next(err))
 }
 
+//GET USER BY EMAIL
 export function getUserByEmail(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.users.findByEmail(req.params.email)
@@ -43,6 +47,7 @@ export function getUserByEmail(req: Request, res: Response, next: NextFunction) 
         .catch((err) => next(err))
 }
 
+//UPDATE USERS LAST LOGIN
 export function updateUsersLastLoginById(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.users.replaceLastLogin(req.params.id)
@@ -55,6 +60,7 @@ export function updateUsersLastLoginById(req: Request, res: Response, next: Next
         })
 }
 
+//GET TWEETS OF A SPECIFIC USER NAME
 export function getUsersTweets(req: Request, res: Response, next: NextFunction) {
     const store = resolveStore(res);
     store.tweets.findTweetsByUserName(req.params.userName)
@@ -66,5 +72,4 @@ export function getUsersTweets(req: Request, res: Response, next: NextFunction) 
             next(err);
         })
 }
-
 

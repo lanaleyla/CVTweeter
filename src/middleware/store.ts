@@ -3,8 +3,8 @@ import { getDBUrl } from '../utils/config';
 import { Request, Response, NextFunction } from 'express';
 import rootStore, { RootStore } from '../store/root';
 
-const url = getDBUrl('DB_SERVER_URL', '');
-const connection = new MongoDBConnection('mongodb://localhost:27017/tweeterProject');//fix this
+const url = getDBUrl();
+const connection = new MongoDBConnection(url);//fix this
 
 export async function connectDb(): Promise<void> {
     await connection.connect();

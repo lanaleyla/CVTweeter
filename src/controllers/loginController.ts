@@ -7,8 +7,7 @@ import { resolveStore } from '../middleware/store';
 import { LocalStorageService } from '../service/localStorageService';
 import { IUser, IUserResToClient } from '../models';
 
-//const jwtSecret = getSecretKey('JWT_SECRET', '');
-const jwtSecret = 'vas_adelante';
+const jwtSecret = getSecretKey();
 const localStorageL = new LocalStorageService();
 
 //LOGIN USER TO THE SYSTEM 

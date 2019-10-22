@@ -21,6 +21,7 @@ export async function buildDB(db: mongodb.Db | undefined) {
     }
 }
 
+//add collection to the data base
 export async function addCollections(db: mongodb.Db, collectionsName: string) {
     if (db) {
         await db.createCollection(collectionsName)

@@ -9,7 +9,7 @@ export class MongoDBConnection {
     constructor(public readonly url: string, ) { }
 
     //CONNECT TO DATA BASE
-    public async connect(): Promise<void> { 
+    public async connect(): Promise<void> {
         this.client = await mongodb.MongoClient.connect(
             this.url,
             { useUnifiedTopology: true, useNewUrlParser: true },
@@ -18,7 +18,7 @@ export class MongoDBConnection {
         this.initialized = true;
     }
 
-     //CREATE A DATA BASE
+    //CREATE A DATA BASE
     public async createDB() {
         await buildDB(this.db);
     }

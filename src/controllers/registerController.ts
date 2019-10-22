@@ -1,6 +1,5 @@
 import express from 'express';
 import { resolveStore } from '../middleware/store';
-import { IUser, ICredential } from '../models';
 
 export function registerUser(req: express.Request, res: express.Response, next: express.NextFunction) {
     const store = resolveStore(res);

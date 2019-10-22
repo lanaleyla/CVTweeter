@@ -1,17 +1,12 @@
-import dotenv from 'dotenv';
 
-export function initConfig() {
-    dotenv.config();
+export function getConfig(fallback?: any) {
+    return 3001 || fallback;
 }
 
-export function getConfig(key: string, fallback?: any) {
-    return process.env[key] || fallback;
+export function getDBUrl() {
+    return 'mongodb://localhost:27017/tweeterProject';
 }
 
-export function getDBUrl(key: string, fallback?: any) {
-    return process.env[key] || fallback;
-}
-
-export function getSecretKey(key: string, fallback?: any) {
-    return process.env[key] || fallback;
+export function getSecretKey() {
+    return 'vas_adelante';
 }

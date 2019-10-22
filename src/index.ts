@@ -1,13 +1,13 @@
 import app from './app';
 import { getConfig } from './utils/config';
-import { connectDb, closeConnection, createDataBase, } from './middleware/store';
+import { connectDb, createDataBase, } from './middleware/store';
 
 async function init() {
   await connectDb(); //CONNECT TO DATA BASE
   createDataBase();
 
-  const port = getConfig('PORT', 3000);
-  app.set('port', 3001);
+  const port = getConfig(3000);
+  app.set('port', port);
 
   //set up server and listen
   const server = app.listen(app.get('port'), async () => {
@@ -17,7 +17,6 @@ async function init() {
       app.get('env'),
     );
     console.log(' Press CTRL-C to stop\n');
-    //closeConnection
   });
 }
 

@@ -14,7 +14,7 @@ export class TweetDBService {
 
     //GET ALL TWEETS (AND ASSIGN STARBYME PROPERTY)
     public async all(): Promise<ITweet[]> {//GET ALL TWEETS //change to ITweet
-        const projection = { _id: 0 };
+        const projection = { _id: 0};
         const result = await this.collection.find({}, { projection }).toArray();
         result.forEach(element => {
             const foundUserIndex = element.userListThatGaveStar.findIndex((u: string) => u === localStorageL.getLocalStorage('userId'));
@@ -116,28 +116,3 @@ export class TweetDBService {
         return !!(resultOfUpdateCount.result && resultOfUpdateList.result);
     }
 }
-
-
-
-
-
-
-
-
-
-    //GET ALL TWEETS
-    // public async all(): Promise<ITweet[]> {//GET ALL TWEETS //change to ITweet
-    //     const projection = { _id: 0 };
-    //     return await this.collection.find({}, { projection }).toArray();
-    // }
-
-       //GET TWEETS BY USER ID
-    // public async findTweetsByUserId(id: string | mongodb.ObjectID): Promise<ITweet[] | null> {
-    //     const documentId = new mongodb.ObjectID(id);
-    //     const projection = { _id: 0 };
-    //     const result = await this.collection.find({ userId: documentId }, { projection }).toArray();
-    //     if (!result) {
-    //         throw new Error('no member');
-    //     }
-    //     else return result;
-    // }

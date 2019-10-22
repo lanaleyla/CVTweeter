@@ -14,7 +14,7 @@ export function validateId(req: Request, res: Response, next: NextFunction) {
 
 //validate content
 export function validateContent(req: Request, res: Response, next: NextFunction) {
-    const result = joi.validate({ content: req.body.content }, tweetSchema);//notice that the content is in the body!!!!
+    const result = joi.validate({ content: req.body.content }, tweetSchema);
     if (result.error !== null) {
         throw new Error("content input");
     }

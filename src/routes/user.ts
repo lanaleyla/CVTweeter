@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as userController from '../controllers/usersController';
-import { validateName, validateEmail, validateId } from '../validations/userValidation';
+import { validateName } from '../validations/userValidation';
 
 const router = Router(); //our router
 
@@ -21,5 +21,4 @@ router.get('/:userName/tweets',validateName, userController.getUsersTweets);
 
 export { router as userRouter };
 
-//router.get('/:id', validateId, userController.getUserById);
 
