@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
 import { MatIconRegistry, MatSnackBar, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
 import { ITweet } from '../../core/models/index';
 import { PageNavigationService, LoginService, TweetsService } from '../../core/services/index'; //change to index
 import { ReplyComponent } from '../reply/reply.component';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tweet',
@@ -17,7 +17,8 @@ export class TweetComponent implements OnInit {
   user: Observable<string>; //when user is logged in
   userName: string;
   deleteOption: boolean = false;
-  constructor(public dialog: MatDialog, private tweetService: TweetsService, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private navigationService: PageNavigationService, private loginService: LoginService, private snackBar: MatSnackBar) {
+  _imageSrc: string = '';
+  constructor(private domSanitizer: DomSanitizer, public dialog: MatDialog, private tweetService: TweetsService, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private navigationService: PageNavigationService, private loginService: LoginService, private snackBar: MatSnackBar) {
     this.InitalizeIcons();
   }
 
@@ -26,6 +27,19 @@ export class TweetComponent implements OnInit {
     if (this.tweet.userName === localStorage.getItem('userName')) {
       this.deleteOption = true;
     }
+    if (this.tweet.userImage === '') {
+      this.imageSrc = 'assets/images/kind.png'
+    } else {
+      this.imageSrc = `data:image/png;base64,${this.tweet.userImage}`;
+    }
+  }
+
+  get imageSrc(): string {
+    return this._imageSrc;
+  }
+
+  set imageSrc(value: string) {
+    this._imageSrc = value;
   }
 
   //get a string represantation of tweets date
@@ -42,7 +56,7 @@ export class TweetComponent implements OnInit {
   reply() {
     this.openDialog();
   }
-  
+
   //star a tweet
   startTweet() {
     this.tweetService.starATweet(this.tweet.id)

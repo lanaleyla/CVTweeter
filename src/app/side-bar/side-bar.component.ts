@@ -23,16 +23,20 @@ export class SideBarComponent implements OnInit {
     );
   }
 
+  //navigate to chosen page
   display(page: string) {
     this.navigationService.navigate(page);
   }
 
+  //close side bar
   closeSidebar() {
     this.clickCloseMenuEvent.emit(false);
   }
 
+  //preform logout from the system
   logout() {
     localStorage.removeItem('userName');
+    localStorage.removeItem('token');
     this.loginService.username = '';
   }
 

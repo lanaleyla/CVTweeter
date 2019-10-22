@@ -22,9 +22,10 @@
         </mat-form-field>
         <div class='imageInput'>
             <label>{{'register.userImage' | translate}}</label>
-            <input type='file' placeholder="Image" value='Image'>
+            <input id='avatar' type='file' placeholder='Image' (change)="onFileChange($event)" #fileInput>
         </div>
-        <span class='errorMsg' *ngIf='duplicateName'>{{'register.duplicateUser'| translate}}</span>
+        <span class='errorMsg' *ngIf='duplicateName'>{{'register.nameExistsMsg'| translate}}</span>
+        <span class='errorMsg' *ngIf='duplicateEmail'>{{'register.emailExistsMsg'| translate}}</span>
         <button type='submit' class='buttons' mat-raised-button color="primary"
             [disabled]="!contactForm.valid">{{'register.submit' | translate}}</button>
         <div class='spinner' *ngIf='spin'>
@@ -32,7 +33,3 @@
         </div>
     </div>
 </form>
-
-
-
-<!-- <span class='errorMsg' *ngIf='duplicateEmail'>{{'register.emailExistsMsg'| translate}}</span> -->

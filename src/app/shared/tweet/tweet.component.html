@@ -1,8 +1,9 @@
 <div class='tweetContainer' *ngIf='tweet'>
     <div class='container'>
-        <img class='userImage'
+        <img class='userImage' [src]='domSanitizer.bypassSecurityTrustResourceUrl(imageSrc)' alt='{{tweet.userName}}' />
+        <!-- <img class='userImage'
             src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDiE9-YuIWDkhz8KTTldzrcwaxQeu9BJIqF98tp275cDnOb8Wl'
-            alt='{{tweet.userName}}'>
+            alt='{{tweet.userName}}'> -->
         <div class='userNameAndContent'>
             <div class='userNameAndDate'>
                 <button class='userNameButton' type='button' (click)='showUserProfile()'>
@@ -20,7 +21,8 @@
             {{tweet.numberOfStars}}</mat-icon>
         <div *ngIf='(user | async)'>
             <mat-icon matRipple svgIcon='reply' aria-hidden='false' aria-label='reply' (click)='reply()'></mat-icon>
-            <mat-icon *ngIf='deleteOption' matRipple svgIcon='delete' aria-hidden='false' aria-label='delete' (click)='deleteTweet()'>
+            <mat-icon *ngIf='deleteOption' matRipple svgIcon='delete' aria-hidden='false' aria-label='delete'
+                (click)='deleteTweet()'>
             </mat-icon>
         </div>
     </div>

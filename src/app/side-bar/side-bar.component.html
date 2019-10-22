@@ -1,7 +1,8 @@
 <mat-toolbar-row class='container'>
     <input class='closeBtn' type='button' value='x' (click)='closeSidebar()' />
     <button mat-button (click)="display('home')">{{'header.home' | translate}}</button>
-    <button *ngIf="name===''" mat-button (click)="display('login')">{{'header.login'| translate}}</button>
-    <button *ngIf="name===''" mat-button (click)="display('register')">{{'header.register'| translate }}</button>
-    <button *ngIf="name!==''" mat-button (click)="logout()">{{'header.logout'| translate }}</button>
+    <button *ngIf="!name || name===''" mat-button (click)="display('login')">{{'header.login'| translate}}</button>
+    <button *ngIf="!name || name===''" mat-button
+        (click)="display('register')">{{'header.register'| translate }}</button>
+    <button *ngIf="name && name!==''" mat-button (click)="logout()">{{'header.logout'| translate }}</button>
 </mat-toolbar-row>

@@ -2,18 +2,18 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-import { IUser } from '../models';
-
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginService {
+
     _userName = new BehaviorSubject<string>('');
     userName: Observable<string> = this._userName.asObservable();
-    _username: string = '';
+    _username: string = ''; //the user name of looged in user
 
     constructor(private http: HttpClient) {
+        this.username = localStorage.getItem('userName');
     }
 
     get username(): string {
@@ -29,21 +29,32 @@ export class LoginService {
         return this.userName;
     }
 
+    //login to the system
     login(email, password) {
         return this.http.post('http://localhost:3001/api/auth/login', { email: email, password: password })
             .pipe(
                 map(data => {
-                    localStorage.setItem('token', data['token'].toString());
-                    localStorage.setItem('userName', data['u'].userName);
+                    this.setLocalStorage(data['token'].toString(),data['u'].userName);
                     this.username = localStorage.getItem('userName');
-                    localStorage.setItem('userId', data['u'].id);//fix this 
                     return data.toString();
                 }))
             .toPromise();
     }
 
-    register(email, password, userName) {
-        return this.http.post('http://localhost:3001/api/auth/register', { email: email, password: password, userName: userName })
-            .toPromise()
+    //register to the system
+    register(email, password, userName, userImage) {
+        return this.http.post('http://localhost:3001/api/auth/register', { email: email, password: password, userName: userName, userImage: userImage })
+            .toPromise();
+    }
+
+    //insert user name and token to local storage
+    setLocalStorage(token: string, username: string) {
+        localStorage.setItem('token', token);
+        localStorage.setItem('userName', username);
     }
 }
+
+
+
+// localStorage.setItem('token', data['token'].toString());
+// localStorage.setItem('userName', data['u'].userName);

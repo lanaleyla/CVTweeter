@@ -21,10 +21,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.name='';
     this.userName = this.loginService.userUserNameObservable;
     this.sub = this.userName.subscribe(
-      data => this.name = data //change it to map
+      data => this.name = data
     );
+    console.log(this.name);
   }
 
   ngOnDestroy() {
@@ -44,10 +46,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   //user logs out
   logout() {
     localStorage.removeItem('userName');
-    this.loginService.username = ''; 
     localStorage.removeItem('token');
-    localStorage.removeItem('userId');
-    localStorage.removeItem('userName');
+    this.loginService.username = '';
   }
 
 }

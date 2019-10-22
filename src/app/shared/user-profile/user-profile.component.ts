@@ -35,7 +35,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-
   get registertiontDate(): string {
     const d = new Date(this.user.registrationDate);
     return d.toLocaleDateString();
