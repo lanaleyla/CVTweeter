@@ -1,16 +1,12 @@
 <div class='tweetContainer' *ngIf='tweet'>
     <div class='container'>
-        <img class='userImage' [src]='domSanitizer.bypassSecurityTrustResourceUrl(imageSrc)' alt='{{tweet.userName}}' />
-        <!-- <img class='userImage'
-            src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDiE9-YuIWDkhz8KTTldzrcwaxQeu9BJIqF98tp275cDnOb8Wl'
-            alt='{{tweet.userName}}'> -->
+        <img class='userImage' [src]='sanitizer.bypassSecurityTrustResourceUrl(imageSrc)' (click)='showUserProfile()' alt='{{tweet.userName}}' />
         <div class='userNameAndContent'>
             <div class='userNameAndDate'>
                 <button class='userNameButton' type='button' (click)='showUserProfile()'>
                     <mat-icon svgIcon='flash' aria-hidden='false' aria-label='flash_on'></mat-icon>
-                    {{tweet.userName}}
+                    {{tweet.userName}}-{{tweetDate}}
                 </button>
-                <div class='date'>{{tweetDate}}</div>
             </div>
             <div class='content'>{{tweet.content}}</div>
         </div>

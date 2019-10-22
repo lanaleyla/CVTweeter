@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ITweet } from '../../core/models';
-import { TweetsService } from '../../core/services/tweets.service';
+import { TweetsService } from '../../core/services/index';
 
 @Component({
   selector: 'app-tweets-list',
@@ -11,19 +11,19 @@ import { TweetsService } from '../../core/services/tweets.service';
 export class TweetsListComponent implements OnInit, OnDestroy, OnChanges {
 
   @Input() userName: string = '';  //user name input
-  @Input() updateTweets: boolean;
+  @Input() updateTweets: boolean;  //refresh tweet list
   intervalId;
   tweetList: Observable<ITweet[]>; //list of tweets
   constructor(private tweetsService: TweetsService) { }
 
   ngOnInit() {
-    if (this.userName === '') {
+    if (this.userName === '') {//get all tweets
       this.getTweets()
     }
     else {
-      this.getTweetsByUserName();
+      this.getTweetsByUserName();//get tweets by user name
     }
-    this.updatedTweetsList();
+    this.updatedTweetsList(); //update tweet list
   }
 
   ngOnDestroy() {
@@ -31,7 +31,7 @@ export class TweetsListComponent implements OnInit, OnDestroy, OnChanges {
     clearInterval(this.intervalId);
   }
 
-  ngOnChanges() {
+  ngOnChanges() {//if request to update tweets was emitted update tweets
     if (this.updateTweets) {
       this.tweetList = this.tweetsService.getAllTweets();
       this.updateTweets = false;

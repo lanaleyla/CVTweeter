@@ -53,8 +53,3 @@ export class LoginService {
         localStorage.setItem('userName', username);
     }
 }
-
-
-
-// localStorage.setItem('token', data['token'].toString());
-// localStorage.setItem('userName', data['u'].userName);

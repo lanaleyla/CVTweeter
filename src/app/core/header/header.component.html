@@ -7,12 +7,13 @@
             </button>
             <div class='menuOptions'>
                 <button mat-button (click)="display('home')">{{'header.home' | translate}}</button>
-                <button *ngIf="!name || name===''" mat-button (click)="display('login')">{{'header.login'| translate}}</button>
-                <button *ngIf="!name || name===''" mat-button (click)="display('register')">{{'header.register'| translate }}</button>
+                <button *ngIf="!name || name===''" mat-button
+                    (click)="display('login')">{{'header.login'| translate}}</button>
+                <button *ngIf="!name || name===''" mat-button
+                    (click)="display('register')">{{'header.register'| translate }}</button>
                 <button *ngIf="name && name!==''" mat-button (click)="logout()">{{'header.logout'| translate }}</button>
             </div>
         </div>
         <app-languages></app-languages>
     </mat-toolbar-row>
 </mat-toolbar>
-

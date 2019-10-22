@@ -1,7 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable, Subscription } from 'rxjs';
-import { PageNavigationService, LoginService } from '../core/services/index';
+import { PageNavigationService, LoginService } from '../services/index';
 
 @Component({
   selector: 'app-header',
@@ -22,11 +22,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.name='';
-    this.userName = this.loginService.userUserNameObservable;
+    this.userName = this.loginService.userUserNameObservable;//subscribe to logged in username
     this.sub = this.userName.subscribe(
       data => this.name = data
     );
-    console.log(this.name);
   }
 
   ngOnDestroy() {
@@ -43,7 +42,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.clickOnMenuEvent.emit(true);
   }
 
-  //user logs out
+  //user logs out (clean loacl storage)
   logout() {
     localStorage.removeItem('userName');
     localStorage.removeItem('token');

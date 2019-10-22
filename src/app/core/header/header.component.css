@@ -9,6 +9,14 @@
 
 .menuIconButton {
     display: none;
+    padding: 0px;
+}
+
+.tweetIcon {
+    height: 40px;
+    width: 40px;
+    border: 1px solid;
+    border-radius: 3px;
 }
 
 .menuOptions {

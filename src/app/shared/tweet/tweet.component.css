@@ -37,23 +37,27 @@
     flex-wrap: wrap;
     justify-content: left;
     font-size: 18px;
+    color: #211d57;
 }
 
 .userImage {
     width: 60px;
     height: 60px;
-    border: 2px solid #211d57;
+    border: 1px solid #211d57;
     border-radius: 20px;
 }
 
 .userNameAndContent {
     display: flex;
     flex-flow: column;
+    flex-wrap: wrap;
+    margin: 0px 0px 0px 10px;
 }
 
 .date {
     align-self: center;
     color: #564fb3;
+    color: #211d57;
 }
 
 .content {

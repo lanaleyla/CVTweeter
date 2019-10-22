@@ -1,0 +1,36 @@
+.user {
+    display: flex;
+    flex-flow: row;
+    padding: 10px;
+    margin: 15px 0px 0px 0px;
+    align-self: center;
+    color: #564fb3;
+    border-bottom: 3px solid #aab8e9;
+}
+
+.userImage {
+    width: 150px;
+    height: 150px;
+    border: 1px solid #211d57;
+    border-radius: 5px;
+}
+
+.userDetails {
+    padding: 0px 0px 0px 20px;
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    color: #211d57;
+}
+
+.userName {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 600px) {
+    .userImage {
+        width: 100px;
+        height: 100px;
+    }
+}

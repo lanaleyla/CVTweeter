@@ -1,4 +1,4 @@
-<div *ngIf="user && user!==''">
+<div *ngIf="userName && userName!==''">
         <app-create-tweet (clickOnPostEvent)='updateTweets($event)'></app-create-tweet>
 </div>
 <app-tweets-list [updateTweets]='updateTweet'></app-tweets-list>

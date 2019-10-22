@@ -1,0 +1,3 @@
+<mat-chip-list aria-label='language selection'>
+    <mat-chip [color]='colorB' [selected]='lang === currrentLanguage' *ngFor='let lang of languages' (click)='changeLanguage(lang)' [value]='lang'>{{lang}}</mat-chip>
+</mat-chip-list>

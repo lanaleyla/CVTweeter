@@ -14,6 +14,10 @@ export class ReplyComponent implements OnInit {
   ngOnInit() {
   }
 
+  get colorB() {
+    return 'primary';
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LanguageService } from '../languageService';
+import { LanguageService } from '../../core/services/languageService';
 
 @Component({
   selector: 'app-languages',
@@ -17,7 +17,11 @@ export class LanguagesComponent implements OnInit {
     return this.languageService.availabelLanguages;
   }
 
-  get currrentLanguage(){
+  get colorB() {
+    return 'primary';
+  }
+
+  get currrentLanguage() {
     return this.languageService.currentLanguage;
   }
 

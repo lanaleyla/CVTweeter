@@ -17,7 +17,7 @@ export class CreateTweetComponent implements OnInit {
   constructor(private tweetService: TweetsService, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.maxCount = 240;
+    this.maxCount = 240; //tweet length
     this.tweetContent = '';
   }
 
@@ -49,7 +49,7 @@ export class CreateTweetComponent implements OnInit {
       .then((data) => {
         this.snackBar.open('Tweet was posted', '', { duration: 2000 });
         this.tweetContent = '';
-        this.clickOnPostEvent.emit(true);
+        this.clickOnPostEvent.emit(true); //update to refresh tweet list
       })
       .catch((err) => console.log(err))
   }

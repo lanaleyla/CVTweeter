@@ -36,5 +36,9 @@
     },
     "guard": {
         "confirmMsg": " sei sicuro?"
+    },
+    "replyTweet":{
+        "close":"Vicino",
+        "cancel":"Annulla"
     }
 }

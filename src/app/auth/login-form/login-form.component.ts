@@ -56,11 +56,10 @@ export class LoginFormComponent implements OnInit {
   onSubmit() {
     this.spin = true;
     this.loginService.login(this.emailField.value, this.passwordField.value)
-      .then(() => {
+      .then((data) => {
         this.contactForm.reset();
         this.navigationService.navigate('home');
       }).catch((err) => {
-        console.log(err);
         if (!err.error.u) {
           this.credentialsError = true;
           this.spin = false;

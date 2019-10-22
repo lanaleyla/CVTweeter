@@ -7,9 +7,9 @@ import { TranslateService } from '@ngx-translate/core';
 export class LanguageService {
 
     constructor(public translate: TranslateService) {
-        translate.addLangs(['en', 'it']);
-        translate.setDefaultLang('en');
-        translate.use(localStorage.getItem("language") ? localStorage.getItem("language") : 'en');
+        translate.addLangs(['en', 'it']); //set languages
+        translate.setDefaultLang('en');   //set default language to en
+        translate.use(localStorage.getItem("language") ? localStorage.getItem("language") : 'en'); 
     }
 
     get availabelLanguages():string[] {
@@ -20,6 +20,7 @@ export class LanguageService {
         return this.translate.currentLang;
     }
 
+    //change system language (set the prefrence in local storage)
     changeLanguage(language: string) {
         localStorage.setItem("language", language);
         this.translate.use(localStorage.getItem("language"));

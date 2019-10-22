@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { LoginService } from '../core/services/loginService';
+import { Subscription } from 'rxjs';
+import { LoginService } from '../../core/services/loginService';
 
 @Component({
   selector: 'app-home',
@@ -9,15 +9,15 @@ import { LoginService } from '../core/services/loginService';
 })
 export class HomeComponent implements OnInit, OnDestroy {
 
-  user: string;
+  userName: string;
   sub: Subscription;
   updateTweet: boolean;
   constructor(private loginService: LoginService) {
   }
 
   ngOnInit() {
-    this.sub = this.loginService.userUserNameObservable.subscribe(
-      (data) => { this.user = data });
+    this.sub = this.loginService.userUserNameObservable.subscribe(//subscribe to logged in username
+      (data) => { this.userName = data });
   }
 
   ngOnDestroy() {
@@ -28,6 +28,4 @@ export class HomeComponent implements OnInit, OnDestroy {
   updateTweets(event) {
     this.updateTweet = event;
   }
-
-
 }

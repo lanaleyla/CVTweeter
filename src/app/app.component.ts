@@ -9,6 +9,7 @@ export class AppComponent {
   title = 'tweeter';
   openSideBar=false;
 
+  //open and close side bar on event
   handleSideBar(event){
     this.openSideBar = event;
   }

@@ -1,7 +1,7 @@
 .newTweet {
     display: flex;
     flex-flow: column;
-    margin: 20px;
+    margin: 20px 20px 0px 20px;
 }
 
 .charachtersCountUnit {
@@ -32,4 +32,10 @@
     background-color: #fff;
     font-size: 16px;
     resize: none;
+}
+
+@media screen and (max-width:600px) {
+    .content {
+        height: 100px;
+    }
 }

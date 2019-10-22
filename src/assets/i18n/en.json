@@ -36,5 +36,9 @@
     },
     "guard":{
         "confirmMsg":"Are you sure?"
+    },
+    "replyTweet":{
+        "close":"close",
+        "cancel":"cancel"
     }
 }

@@ -4,19 +4,19 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './home/home.component';
-import { HeaderComponent } from './header/header.component';
+import { HomeComponent } from './components/home/home.component';
+import { HeaderComponent } from './core/header/header.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import { FormsModule } from '@angular/forms';
-import { LanguagesComponent } from './languages/languages.component';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { SideBarComponent } from './side-bar/side-bar.component';
+import { SideBarComponent } from './core/side-bar/side-bar.component';
+import { AuthModule } from './auth/auth.module';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient);
@@ -27,8 +27,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AppComponent,
     HomeComponent,
     HeaderComponent,
-    LanguagesComponent,
     SideBarComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
@@ -43,14 +43,38 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BrowserAnimationsModule,
     FormsModule,
     MatToolbarModule,
-    MatChipsModule,
     MatDialogModule,
     MatButtonModule,
     CoreModule,
     SharedModule,
+    AuthModule,
     AppRoutingModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

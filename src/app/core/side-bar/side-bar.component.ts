@@ -1,7 +1,7 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { PageNavigationService } from '../core/services/pageNavigationService';
-import { LoginService } from '../core/services/loginService';
 import { Subscription } from 'rxjs';
+import { PageNavigationService } from '../services/pageNavigationService';
+import { LoginService } from '../services/loginService';
 
 @Component({
   selector: 'app-side-bar',
@@ -12,13 +12,13 @@ export class SideBarComponent implements OnInit {
 
   sub: Subscription;
   name: string;
-  @Output() clickCloseMenuEvent = new EventEmitter();
+  @Output() clickCloseMenuEvent = new EventEmitter(); //on side bar close event
 
   constructor(private navigationService: PageNavigationService, private loginService: LoginService) {
   }
 
   ngOnInit() {
-    this.sub = this.loginService.userUserNameObservable.subscribe(
+    this.sub = this.loginService.userUserNameObservable.subscribe(//subscribe to logged in username
       data => this.name = data 
     );
   }
@@ -33,11 +33,10 @@ export class SideBarComponent implements OnInit {
     this.clickCloseMenuEvent.emit(false);
   }
 
-  //preform logout from the system
+  //preform logout from the system (clear the local storage)
   logout() {
     localStorage.removeItem('userName');
     localStorage.removeItem('token');
     this.loginService.username = '';
   }
-
 }

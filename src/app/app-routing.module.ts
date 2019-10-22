@@ -1,19 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { HomeComponent } from './home/home.component';
-import { LoginFormComponent } from './shared/login-form/login-form.component';
-import { RegisterFormComponent } from './shared/register-form/register-form.component';
-import { DirtyFormGuard } from './core/guards/dirty-form.guard';
-import { UserProfileComponent } from './shared/user-profile/user-profile.component';
+import { HomeComponent } from './components/home/home.component';
+import { UserProfileComponent } from './core/user-profile/user-profile.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
-  { path: 'login', component: LoginFormComponent ,canDeactivate: [DirtyFormGuard]},
-  { path: 'register', component: RegisterFormComponent ,canDeactivate: [DirtyFormGuard]},
   { path: 'profile/:userName', component: UserProfileComponent },
-
-  // { path: '**', component: NotFoundComponent }
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

@@ -1,10 +1,10 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { MatIconRegistry, MatSnackBar, MatDialog } from '@angular/material';
 import { Observable } from 'rxjs';
-import { ITweet } from '../../core/models/index';
-import { PageNavigationService, LoginService, TweetsService } from '../../core/services/index'; //change to index
-import { ReplyComponent } from '../reply/reply.component';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ITweet } from '../../core/models/index';
+import { PageNavigationService, LoginService, TweetsService } from '../../core/services/index'; 
+import { ReplyComponent } from '../reply/reply.component';
 
 @Component({
   selector: 'app-tweet',
@@ -14,24 +14,19 @@ import { DomSanitizer } from '@angular/platform-browser';
 export class TweetComponent implements OnInit {
 
   @Input() tweet: ITweet;
-  user: Observable<string>; //when user is logged in
-  userName: string;
+  user: Observable<string>; 
   deleteOption: boolean = false;
   _imageSrc: string = '';
-  constructor(private domSanitizer: DomSanitizer, public dialog: MatDialog, private tweetService: TweetsService, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private navigationService: PageNavigationService, private loginService: LoginService, private snackBar: MatSnackBar) {
-    this.InitalizeIcons();
+  constructor(public dialog: MatDialog, private tweetService: TweetsService, private iconRegistry: MatIconRegistry, private sanitizer: DomSanitizer, private navigationService: PageNavigationService, private loginService: LoginService, private snackBar: MatSnackBar) {
+    this.InitalizeIcons(); //set icons of a tweet
   }
 
   ngOnInit() {
-    this.user = this.loginService.userUserNameObservable;
-    if (this.tweet.userName === localStorage.getItem('userName')) {
-      this.deleteOption = true;
+    this.user = this.loginService.userUserNameObservable;//get logged in user observable 
+    if (this.tweet.userName === localStorage.getItem('userName')) { //check if current tweet is of this user
+      this.deleteOption = true; //enabel delete option
     }
-    if (this.tweet.userImage === '') {
-      this.imageSrc = 'assets/images/kind.png'
-    } else {
-      this.imageSrc = `data:image/png;base64,${this.tweet.userImage}`;
-    }
+    this.setImageSrc();//set user image
   }
 
   get imageSrc(): string {
@@ -53,13 +48,19 @@ export class TweetComponent implements OnInit {
     this.navigationService.navigate(`profile/${this.tweet.userName}`);
   }
 
+  //open reply dialog to create new reply tweet
   reply() {
     this.openDialog();
   }
 
   //star a tweet
   startTweet() {
-    this.tweetService.starATweet(this.tweet.id)
+    if (this.tweet.starByMe === true) {//update current view of number of stars
+      this.tweet.numberOfStars -= 1;
+    } else {
+      this.tweet.numberOfStars += 1;
+    }
+    this.tweetService.starATweet(this.tweet.id)//update in data base
       .then((data) => console.log(data))
       .catch(err => {
         if (err.status === 401)
@@ -67,18 +68,19 @@ export class TweetComponent implements OnInit {
       })
   }
 
+  //open dialog window
   openDialog(): void {
     const dialogRef = this.dialog.open(ReplyComponent, {
-      width: 'auto',
+      width: 'auto', height: 'auto',
     });
   }
 
   //Delete tweet
   deleteTweet() {
-    if (confirm("Delete this tweet?")) {
+    if (confirm("Delete this tweet?")) {//confirm tweet deletion
       this.tweetService.deleteTweet(this.tweet.id)
         .then(() => {
-          this.snackBar.open('Tweet was deleted', '', { duration: 2000 });
+          this.snackBar.open('Tweet will be deleted', '', { duration: 2000 });
         })
         .catch(err => {
           if (err.error === 'not the owner error' && err.status === 403) {
@@ -105,5 +107,14 @@ export class TweetComponent implements OnInit {
     this.iconRegistry.addSvgIcon(
       'reply',
       this.sanitizer.bypassSecurityTrustResourceUrl('assets/icons/reply-24px.svg'));
+  }
+
+  //set image src of the tweet with user image
+  setImageSrc() {
+    if (this.tweet.userImage === '') { //set image of user 
+      this.imageSrc = 'assets/images/kind.png'
+    } else {
+      this.imageSrc = `data:image/png;base64,${this.tweet.userImage}`;
+    }
   }
 }
