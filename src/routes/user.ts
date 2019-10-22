@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as userController from '../controllers/usersController';
-import { validateName } from '../validations/userValidation';
+import { validateName ,validateEmail} from '../validations/userValidation';
 
 const router = Router(); //our router
 
@@ -11,7 +11,7 @@ router.get('/', userController.getAllUsers);
 router.get('/:userName', validateName, userController.getUserByUserName);
 
 //get user by email 
-router.get('/user/:email', userController.getUserByEmail);//add email validation
+router.get('/user/:email',validateEmail, userController.getUserByEmail);//add email validation
 
 //get user by userName
 router.get('/profile/:userName', userController.getUserByUserName);//add email validation

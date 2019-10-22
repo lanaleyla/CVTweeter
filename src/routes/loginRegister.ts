@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import * as loginController from '../controllers/loginController';
 import * as registerController from '../controllers/registerController';
-import { validatePassword } from '../validations/credentialValidation';
+import { validatePassword ,validateEmail} from '../validations/credentialValidation';
 
 const router = Router(); //our router
 
 //login to the system
-router.post('/login',loginController.loginUser);
+router.post('/login',validateEmail,loginController.loginUser);
 
 //register to the system
-router.post('/register',validatePassword, registerController.registerUser);
+router.post('/register',validateEmail,validatePassword, registerController.registerUser);
 
 export { router as loginRegisterRouter };

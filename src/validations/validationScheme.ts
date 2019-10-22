@@ -4,7 +4,7 @@ const Joi = require('joi');
 export const userSchema = Joi.object().keys({
     id: Joi.string().min(24).max(24),
     userName: Joi.string().alphanum().min(1),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
+    email: Joi.string().email(),
 })
 
 //tweets validation schema:id, userName,content,numberOfStars
@@ -19,6 +19,6 @@ export const tweetSchema = Joi.object().keys({
 export const credentialSchema = Joi.object().keys({
     id: Joi.string().min(24).max(24),
     userName: Joi.string().alphanum().min(1),
-    email: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }),
-    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/).required(),
+    email: Joi.string().email(),
+    password: Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/),
 })
